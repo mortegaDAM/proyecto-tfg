@@ -3,11 +3,19 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const projectId = process.env.FIREBASE_PROJECT_ID;
+const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+if (!projectId || !clientEmail || !privateKey) {
+  throw new Error("Faltan variables de entorno de Firebase en backend/.env");
+}
+
 admin.initializeApp({
   credential: admin.credential.cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+    projectId,
+    clientEmail,
+    privateKey,
   }),
 });
 

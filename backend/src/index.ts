@@ -2,9 +2,10 @@ import { db } from "./firebase";
 
 console.log("Backend iniciado");
 
-async function testConnection() {
+// Ejemplo simple de Firestore
+async function testFirestore() {
   const snapshot = await db.collection("test").get();
-  console.log("Conectado a Firebase. Documentos:", snapshot.size);
+  console.log("Documentos en 'test':", snapshot.size);
 }
 
-testConnection();
+testFirestore();
