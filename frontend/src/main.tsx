@@ -9,6 +9,9 @@ import { AuthLayout } from './layouts/AuthLayout.tsx'
 import { MiCuentaView } from './routes/MiCuentaView.tsx'
 import { MenuView } from './routes/MenuView.tsx'
 import { AuthStatus } from './hooks/AuthStatus.tsx'
+import { MisDatosView } from './routes/MisDatosView.tsx'
+import { MisPuestosView } from './routes/MisPuestosView.tsx'
+import { PrivateRoute } from './hooks/PrivateRoute.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
@@ -17,7 +20,12 @@ createRoot(document.getElementById('root')!).render(
         <Route element={<MenuView />}>
           {/*Ruta Principal*/}
           <Route index element={<App />} />
-          <Route path=':nombreUsuario' element={<MiCuentaView />} />
+          {/*Necesita si o si tener user y perfil (useAuth) */}
+          <Route element={<PrivateRoute />}>
+            <Route path='mi-cuenta' element={<MiCuentaView />} />
+            <Route path='mi-cuenta/puestos' element={<MisPuestosView />} />
+            <Route path='mi-cuenta/datos' element={<MisDatosView />} />
+          </Route>
         </Route>
       </Route>
 

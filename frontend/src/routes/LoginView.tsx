@@ -13,7 +13,6 @@ export default function Login() {
         try {
             await signInWithEmailAndPassword(auth, email, pwd);
             console.log("Iniciado sesion correctamente");
-            console.log(auth);
             navigate('/');
         } catch (error) {
             console.error("No iniciado sesion " + error);

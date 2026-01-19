@@ -1,16 +1,16 @@
 import type { User } from "firebase/auth";
-import { Link, useParams, useOutletContext, Outlet } from "react-router-dom";
+import { Link, useOutletContext, Outlet } from "react-router-dom";
+import type { UsuarioFirebase } from "../hooks/useAuth";
 
 interface OutletContext {
     user: User,
-    perfil: string,
+    perfil: UsuarioFirebase,
     loading: boolean
 }
 
 export const MenuView = () => {
-    let { nombreUsuario } = useParams();
     const { user, perfil, loading } = useOutletContext<OutletContext>();
-    nombreUsuario = perfil;
+
 
     return (
         <>
@@ -23,7 +23,7 @@ export const MenuView = () => {
 
                 <ul>
                     <li>
-                        <Link to="/search" >Buscar</Link>
+                        <Link to="/buscar" >Buscar</Link>
                     </li>
                     {!user ? (
                         <li>
@@ -31,7 +31,7 @@ export const MenuView = () => {
                         </li>
                     ) : (
                         <li>
-                            <Link to={`/${nombreUsuario}`} >Mi Cuenta</Link>
+                            <Link to={`/mi-cuenta`} >Mi Cuenta</Link>
                         </li>
                     )}
 

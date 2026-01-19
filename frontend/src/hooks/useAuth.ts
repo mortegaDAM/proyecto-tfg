@@ -2,8 +2,11 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase";
 
-interface UsuarioFirebase {
-    username: string;
+export interface UsuarioFirebase {
+    name: string,
+    surname: string,
+    username: string,
+    email: string
 }
 
 export const useAuth = () => {
@@ -25,7 +28,7 @@ export const useAuth = () => {
                     });
                     const datos = await respuesta.json();
                     if (!datos.empty) {
-                        setPerfil(datos.usuario.username);
+                        setPerfil(datos.usuario);
                     }
                     setUser(user);
                     setLoading(false);
