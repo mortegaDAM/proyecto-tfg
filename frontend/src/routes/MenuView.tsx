@@ -1,17 +1,9 @@
-import type { User } from "firebase/auth";
-import { Link, useOutletContext, Outlet } from "react-router-dom";
-import type { UsuarioFirebase } from "../hooks/useAuth";
-
-interface OutletContext {
-    user: User,
-    perfil: UsuarioFirebase,
-    loading: boolean
-}
+import { Link, Outlet } from "react-router-dom";
+import { useAuth } from "../hooks/AuthProvider";
 
 export const MenuView = () => {
-    const { user, perfil, loading } = useOutletContext<OutletContext>();
-
-
+    const {user} = useAuth();
+    
     return (
         <>
             <nav>
@@ -37,7 +29,7 @@ export const MenuView = () => {
 
                 </ul>
             </nav>
-            <Outlet context={{ user, perfil, loading }} />
+            <Outlet />
         </>
 
     );

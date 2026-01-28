@@ -1,36 +1,53 @@
 import { useOutletContext } from "react-router-dom";
-import { type OutletContext } from "./MiCuentaView";
+import { type OutletContext } from "../interfaces/interfaces";
 import { useState } from "react";
+import { auth } from "../firebase/firebase";
+import { useAuth } from "../hooks/AuthProvider";
 
 export const MisDatosView = () => {
-    const { perfil } = useOutletContext<OutletContext>();
-    const [nombre, setNombre] = useState(perfil.name);
-    const [apellido, setApellido] = useState(perfil.surname);
-    const [username, setUsername] = useState(perfil.username);
+    const { user,perfil, actualizarPerfil } = useAuth();
+    const [nombre, setNombre] = useState(perfil?.nombre);
     const [estado, setEstado] = useState(false);
+
+    //console.log(perfil);
 
     const handleUpdateUser = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log("handleUpdateUser -> peticion fetch");
 
-        if (nombre === "" || apellido === "" || username === "") {
+        // updateEmail(user o auth.currentUser, emailNuevo)
+
+        if (nombre === "") {
             alert("No pueden haber campos vacios");
         } else {
-            console.log("ACtualizar los datos...")
-            // TODO: hacer el update en server.ts
-            // const respuesta = await fetch("http://localhost:3000/actualizar-usuario", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-type": "application/json"
-            //     },
-            //     body: JSON.stringify(perfil)
-            // });
 
-            // TODO: actualizar perfil con los datos actualizados de firebase
-            location.reload();
+            if (user && perfil) {
+                const usuarioEditado = {
+                    "nombre": nombre,
+                    "email": perfil.email,
+                    "uid": user.uid
+                }
+
+
+                console.log("Actualizar los datos...")
+                // TODO: hacer el update en server.ts
+                // const respuesta = await fetch("http://localhost:3000/registro", {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-type": "application/json"
+                //     },
+                //     body: JSON.stringify(usuarioEditado)
+                // });
+
+                // if (respuesta.ok) {
+                //     const datos = await respuesta.json();
+
+                //     actualizarPerfil(datos.data);
+
+                //     location.reload();
+                // }
+            }
         }
-
-
     }
 
     // TODO: modal para "Cancelar"
@@ -41,10 +58,8 @@ export const MisDatosView = () => {
             {!estado ? (
                 <div>
                     <ul>
-                        <li>Nombre: {perfil.name}</li>
-                        <li>Apellido: {perfil.surname}</li>
-                        <li>Nombre de Usuario: {perfil.username}</li>
-                        <li>Email: {perfil.email}</li>
+                        <li>Nombre: {perfil?.nombre}</li>
+                        <li>Email: {perfil?.email}</li>
                     </ul>
                     <button onClick={() => setEstado(true)}>Editar Datos</button>
                 </div>
@@ -52,21 +67,21 @@ export const MisDatosView = () => {
             ) : (
                 <div>
                     <form onSubmit={handleUpdateUser}>
-                        <input type="text" value={nombre} placeholder={perfil.name}
+                        <input type="text" value={nombre} placeholder={perfil?.nombre}
                             onChange={(event) => {
                                 setNombre(event.target.value);
                             }}
                         />
-                        <input type="text" value={apellido} placeholder={perfil.surname}
+                        {/*<input type="text" value={apellido} placeholder={perfil?.surname}
                             onChange={(event) => {
                                 setApellido(event.target.value);
                             }}
                         />
-                        <input type="text" value={username} placeholder={perfil.username} required
+                        <input type="text" value={username} placeholder={perfil?.username} required
                             onChange={(event) => {
                                 setUsername(event.target.value);
                             }}
-                        />
+                        />*/}
                         <button type="submit">Actualizar Datos</button>
                         <button onClick={() => setEstado(false)}>Cancelar</button>
                     </form>

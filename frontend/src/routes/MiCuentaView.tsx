@@ -1,17 +1,11 @@
-import { signOut, type User } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import type { UsuarioFirebase } from "../hooks/useAuth";
-
-export interface OutletContext {
-    user: User,
-    perfil: UsuarioFirebase,
-    loading: boolean
-}
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/AuthProvider";
 
 export const MiCuentaView = () => {
     const navigate = useNavigate();
-    const { perfil } = useOutletContext<OutletContext>();
+    const { perfil } = useAuth();
 
     const handleCloseSession = async () => {
         await signOut(auth)
@@ -38,7 +32,7 @@ export const MiCuentaView = () => {
     return (
         <>
             <h1>Mi Cuenta</h1>
-            <h2>{perfil.username}</h2>
+            <h2>{perfil?.nombre}</h2>
             <button onClick={handleMisDatos}>Mis Datos</button>
             <button onClick={handleMisPuestos}>Mis Puestos</button>
             <button onClick={handleCloseSession}>Cerrar Sesion</button>

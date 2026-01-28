@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import { useAuth } from "./useAuth";
+import { useAuth } from "./AuthProvider";
 
 export const AuthStatus = () => {
-    const { user, perfil, loading } = useAuth();
+    const { loading } = useAuth();
 
     if (loading) {
         return <div>Cargando...</div>
@@ -12,7 +12,7 @@ export const AuthStatus = () => {
 
     return (
 
-        <Outlet context={{ user, perfil, loading }} />
+        <Outlet />
 
     );
 }
