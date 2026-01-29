@@ -1,11 +1,8 @@
-import { useOutletContext } from "react-router-dom";
-import { type OutletContext } from "../interfaces/interfaces";
 import { useState } from "react";
-import { auth } from "../firebase/firebase";
 import { useAuth } from "../hooks/AuthProvider";
 
 export const MisDatosView = () => {
-    const { user,perfil, actualizarPerfil } = useAuth();
+    const { user, perfil, actualizarPerfil } = useAuth();
     const [nombre, setNombre] = useState(perfil?.nombre);
     const [estado, setEstado] = useState(false);
 
