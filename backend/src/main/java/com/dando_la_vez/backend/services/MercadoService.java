@@ -16,16 +16,15 @@ public class MercadoService {
     public List<Mercado> getAllMercados(){
         return mercadoRepository.findAll();
     }
-
     public Optional<Mercado> findById(long id){
         return mercadoRepository.findById(id);
     }
-
     public Mercado createMercado(Mercado mercado){
+        // analizar si el usuario esta en la bbdd
         return mercadoRepository.save(mercado);
     }
-
     public Mercado updateMercado(Mercado mercado){
         return mercadoRepository.save(mercado);
     }
+
 }
