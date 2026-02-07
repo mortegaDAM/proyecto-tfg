@@ -1,18 +1,20 @@
 package com.dando_la_vez.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
     private String nombre;
@@ -20,7 +22,10 @@ public class Usuario {
     private String email;
     @Column
     private String uid;
-    //@OneToMany(mappedBy = )
+
+    @OneToMany(mappedBy = "usuario")
+    @JsonManagedReference("puesto-usuario")
+    private List<Puesto> listaPuestos;
 
     public Usuario(String nombre, String email, String uid) {
         this.nombre = nombre;

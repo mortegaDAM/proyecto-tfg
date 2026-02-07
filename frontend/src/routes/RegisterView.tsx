@@ -9,9 +9,9 @@ export const RegisterView = () => {
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
-    const [username, setUsername] = useState('');
+    // const [username, setUsername] = useState('');
     const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
+    // const [surname, setSurname] = useState('');
 
     // Si el username ya existe - NO EN BBDD
     // const handleUserName = async () => {
@@ -65,7 +65,7 @@ export const RegisterView = () => {
             } else {
                 alert('No se ha podido registrar el usuario');
             }
-            
+
         } catch (error) {
             alert("Email ya registrado anteriormente");
             console.error("Registro Error: " + error);
