@@ -44,9 +44,9 @@ public class UsuarioController {
 
     @GetMapping("/usuario/{id}")
     public ResponseEntity<?> getUsuarioById(@PathVariable int id){
-        Optional<Usuario> usuario = usuarioService.findById(id);
         Map<String, Object> response = new HashMap<>();
         try{
+            Optional<Usuario> usuario = usuarioService.findById(id);
             if(usuario.isPresent()){
                 response.put("code",1);
                 response.put("message", "Usuario obtenido correctamente");
@@ -94,7 +94,7 @@ public class UsuarioController {
         }
     }
 
-    @PostMapping("/createUsuario")
+    @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody Usuario usuario){
         Map<String, Object> response = new HashMap<>();
         try{
@@ -112,7 +112,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/updateUsuario/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUser(@RequestBody Usuario usuario, @PathVariable int id){
         Map<String, Object> response = new HashMap<>();
         try{

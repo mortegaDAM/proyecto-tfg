@@ -2,8 +2,8 @@ import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
 
 export const MenuView = () => {
-    const {user} = useAuth();
-    
+    const { user } = useAuth();
+
     return (
         <>
             <nav>
@@ -23,7 +23,7 @@ export const MenuView = () => {
                         </li>
                     ) : (
                         <li>
-                            <Link to={`/mi-cuenta`} >Mi Cuenta</Link>
+                            <Link to="/mi-cuenta" >Mi Cuenta</Link>
                         </li>
                     )}
 
