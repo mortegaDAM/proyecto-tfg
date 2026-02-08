@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 export const MisDatosView = () => {
     const { user, perfil, actualizarPerfil } = useAuth();
     const [nombre, setNombre] = useState(perfil?.nombre);
     const [estado, setEstado] = useState(false);
+    const navigate = useNavigate();
 
     //console.log(perfil);
 
@@ -47,6 +51,17 @@ export const MisDatosView = () => {
         }
     }
 
+    // envia un email de cambio de contraseña
+    // un email muy feo
+    // no controlas si se acaba la sesion
+    const handlePassword = () => {
+        // if (perfil) {
+        //     sendPasswordResetEmail(auth, perfil.email)
+        //         .then(() => console.log("Email enviado"))
+        //         .catch(err => console.error(err));
+        // }        
+    }
+
     // TODO: modal para "Cancelar"
 
     return (
@@ -59,6 +74,7 @@ export const MisDatosView = () => {
                         <li>Email: {perfil?.email}</li>
                     </ul>
                     <button onClick={() => setEstado(true)}>Editar Datos</button>
+                    <button onClick={handlePassword}>Actualizar Contraseña</button>
                 </div>
 
             ) : (

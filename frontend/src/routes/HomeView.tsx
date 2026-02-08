@@ -18,14 +18,12 @@ export const HomeView = () => {
     const [mercados, setMercados] = useState<Mercados[]>();
 
     useEffect(() => {
-        console.log("USE EFFECT HOME");
         const getMercados = async () => {
-            const respuesta = await fetch("http://localhost:8080/api/Mercado/getAll");
+            const respuesta = await fetch("http://localhost:8080/api/mercados/getAll");
             if (respuesta.ok) {
                 const datos = await respuesta.json();
 
                 setMercados(datos.data);
-                console.log(mercados);
             }
         }
         getMercados();

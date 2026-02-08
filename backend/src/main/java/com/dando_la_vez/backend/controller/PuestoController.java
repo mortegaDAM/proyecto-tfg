@@ -125,7 +125,7 @@ public class PuestoController {
             }else {
                 response.put("code",1);
                 response.put("message", "Puesto no borrado porque no se ha encontrado");
-                response.put("total", 1);
+                response.put("total", 0);
                 response.put("data", null);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }

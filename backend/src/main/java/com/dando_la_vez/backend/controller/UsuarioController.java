@@ -139,5 +139,57 @@ public class UsuarioController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> eliminarUsuario(@PathVariable int id){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            Optional<Usuario> usuarioEncontrado = usuarioService.findById(id);
+            if(usuarioEncontrado.isPresent()){
+                usuarioService.deleteById(id);
+                response.put("code",1);
+                response.put("message", "Usuario borrado correctamente");
+                response.put("total", 1);
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("code",1);
+                response.put("message", "Usuario no borrado porque no se ha encontrado");
+                response.put("total", 0);
+                response.put("data", null);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }catch(Exception e){
+            response.put("code",2);
+            response.put("message", "error de ejecucion");
+            response.put("cause", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/listaPuestos/{id}")
+    public ResponseEntity<?> sacarListaPuestosUsuario(@PathVariable int id){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            Optional<Usuario> usuarioOptional = usuarioService.findById(id);
+            if(usuarioOptional.isPresent()){
+                response.put("code",1);
+                response.put("message", "Usuario borrado correctamente");
+                response.put("size", usuarioOptional.get().getListaPuestos().size());
+                response.put("data", usuarioOptional.get().getListaPuestos());
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("code",1);
+                response.put("message", "Usuario no encontrado");
+                response.put("total", 0);
+                response.put("data", null);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }catch(Exception e){
+            response.put("code",2);
+            response.put("message", "error de ejecucion");
+            response.put("cause", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
 
 }
