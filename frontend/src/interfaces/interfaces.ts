@@ -15,8 +15,13 @@ export interface UsuarioFirebase {
 // }
 
 export interface AuthContextInterface {
-    user: User|null,
+    user: User | null,
     perfil: UsuarioFirebase | null,
     loading: boolean,
     actualizarPerfil(perfil: UsuarioFirebase): void
+}
+
+export interface Mercados {
+    id: number,
+    nombre: string
 }

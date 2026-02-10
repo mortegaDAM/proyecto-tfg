@@ -45,6 +45,7 @@ export const RegisterView = () => {
                 alert('No se ha podido registrar el usuario');
             }
 
+
         } catch (error) {
             alert("Email ya registrado anteriormente");
             console.error("Registro Error: " + error);
