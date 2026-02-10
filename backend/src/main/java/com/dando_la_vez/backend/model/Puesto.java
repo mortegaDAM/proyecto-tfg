@@ -35,7 +35,7 @@ public class Puesto {
     @JsonBackReference("puesto-mercado")
     private Mercado mercado;
 
-    @JsonBackReference("cliente-turno-puesto")
+//    @JsonManagedReference("cliente-turno-puesto")
     @ManyToMany(mappedBy = "listaPuestos")
     public Set<Cliente> listaClientes;
 

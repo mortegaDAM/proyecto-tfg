@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import { type AuthContextInterface, type UsuarioFirebase } from "../interfaces/interfaces";
+import { type AuthContextInterface, type Usuario } from "../interfaces/interfaces";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
@@ -8,11 +8,11 @@ const AuthContext = createContext<AuthContextInterface | null>(null);
 
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [perfil, setPerfil] = useState<UsuarioFirebase | null>(null);
+    const [perfil, setPerfil] = useState<Usuario | null>(null);
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User|null>(null);
+    const [user, setUser] = useState<User | null>(null);
 
-    const actualizarPerfil = (nuevoPerfil: UsuarioFirebase | null) => {
+    const actualizarPerfil = (nuevoPerfil: Usuario | null) => {
         setPerfil(nuevoPerfil);
     }
 
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setLoading(false);
         });
         return unsubscribe;
-    },[]);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, perfil, loading, actualizarPerfil }}>

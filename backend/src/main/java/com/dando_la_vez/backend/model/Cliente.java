@@ -25,8 +25,8 @@ public class Cliente {
     @Column
     private String email;
 
-
-    @JsonBackReference("cliente-turno-puesto")
+    @JsonIgnore
+//    @JsonBackReference("cliente-turno-puesto")
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "turnos",
             joinColumns = {@JoinColumn(name = "id_cliente")},

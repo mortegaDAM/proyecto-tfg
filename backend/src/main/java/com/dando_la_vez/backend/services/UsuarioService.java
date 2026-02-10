@@ -37,4 +37,8 @@ public class UsuarioService {
         return usuarioRepository.findByUid(uid);
     }
 
+    public void deleteById(long id){
+        usuarioRepository.deleteById(id);
+    }
+
 }

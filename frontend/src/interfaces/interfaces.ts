@@ -1,27 +1,33 @@
 import type { User } from "firebase/auth"
 
-export interface UsuarioFirebase {
+export interface Usuario {
     id: number,
     nombre: string,
     email: string,
     uid: string
 }
 
-// export interface OutletContext {
-//     user: User,
-//     perfil: UsuarioFirebase,
-//     loading: boolean,
-//     actualizarPerfil(perfil: UsuarioFirebase): void
-// }
-
 export interface AuthContextInterface {
     user: User | null,
-    perfil: UsuarioFirebase | null,
+    perfil: Usuario | null,
     loading: boolean,
-    actualizarPerfil(perfil: UsuarioFirebase): void
+    actualizarPerfil(perfil: Usuario): void
 }
 
 export interface Mercados {
     id: number,
     nombre: string
+}
+
+export interface Clientes {
+    id: number,
+    email: string,
+    nombre: string
+}
+
+export interface Puesto {
+    id: number,
+    abierto: boolean,
+    nombre: string,
+    listaClientes: Clientes[]
 }

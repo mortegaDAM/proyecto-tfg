@@ -46,7 +46,7 @@ export const RegisterView = () => {
                 "uid": userCredential.user.uid
             }
 
-            const respuesta = await fetch("http://localhost:8080/api/usuarios/createUsuario", {
+            const respuesta = await fetch("http://localhost:8080/api/usuarios/create", {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json"
@@ -103,6 +103,8 @@ export const RegisterView = () => {
                 />
                 <button type="submit">Registrarse</button>
             </form>
+            <button onClick={() => navigate('/')}>Volver a inicio</button>
+
         </div>
     );
 }
