@@ -9,7 +9,7 @@ import { MisDatosView } from "./routes/MisDatosView";
 import { AuthLayout } from "./layouts/AuthLayout";
 import Login from "./routes/LoginView";
 import { PaginaNoExistente } from "./routes/PaginaNoExistente";
-import { HomeView } from "./routes/HomeView";
+import HomeView from "./routes/HomeView";
 import { AuthProvider } from "./hooks/AuthProvider";
 
 function App() {

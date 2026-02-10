@@ -2,6 +2,8 @@ import { createUserWithEmailAndPassword, } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import './RegisterView.css';
 
 
 export const RegisterView = () => {
@@ -9,36 +11,13 @@ export const RegisterView = () => {
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
-    const [username, setUsername] = useState('');
+    // Using 'name' state for "Usuario" field as per current backend logic mapping
     const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-
-    // Si el username ya existe - NO EN BBDD
-    // const handleUserName = async () => {
-    //     try {
-    //         const respuesta = await fetch(`http://localhost:3000/get-equal-username?username=${username.toLowerCase().trim()}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 "Content-type": "application/json"
-    //             },
-    //         });
-
-    //         const datos = await respuesta.json();
-    //         return datos.existe;
-
-    //     } catch (error) {
-    //         console.error(error);
-    //         alert("Error de conexion");
-    //         return true;
-    //     }
-    // }
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            //const existe = await handleUserName();
             const userCredential = await createUserWithEmailAndPassword(auth, email, pwd);
-
 
             const usuarioNuevo = {
                 "nombre": name,
@@ -65,7 +44,7 @@ export const RegisterView = () => {
             } else {
                 alert('No se ha podido registrar el usuario');
             }
-            
+
         } catch (error) {
             alert("Email ya registrado anteriormente");
             console.error("Registro Error: " + error);
@@ -73,36 +52,50 @@ export const RegisterView = () => {
     }
 
     return (
-        <div>
-            <h1>Registro</h1>
-            <form onSubmit={handleRegister}>
-                <input type="text" value={name} placeholder="Nombre" required
-                    onChange={(event) => {
-                        setName(event.target.value);
-                    }}
-                />
-                {/*<input type="text" value={surname} placeholder="Apellido" required
-                    onChange={(event) => {
-                        setSurname(event.target.value);
-                    }}
-                />
-                <input type="text" value={username} placeholder="Username" required
-                    onChange={(event) => {
-                        setUsername(event.target.value);
-                    }}
-                />*/}
-                <input type="email" value={email} placeholder="Email" required
-                    onChange={(event) => {
-                        setEmail(event.target.value);
-                    }}
-                />
-                <input type="password" value={pwd} placeholder="Contraseña" required
-                    onChange={(event) => {
-                        setPwd(event.target.value);
-                    }}
-                />
-                <button type="submit">Registrarse</button>
-            </form>
+        <div className="page-wrapper">
+            {/* Reuse Navbar if needed, or just keep it standalone page. 
+                 User request implies a separate view, but keeping consistency. 
+                 Since it's a separate route /registro, adding Navbar might be good or bad depending on design.
+                 Given the design of MenuView, let's keep it simple and just show the form centered.
+             */}
+            <Navbar />
+            <div className="register-container">
+                <div className="register-card">
+                    <h1 className="register-title">Crear Cuenta</h1>
+                    <form onSubmit={handleRegister} className="register-form">
+                        <input
+                            type="text"
+                            className="register-input"
+                            value={name}
+                            placeholder="Usuario"
+                            required
+                            onChange={(event) => setName(event.target.value)}
+                        />
+
+                        <input
+                            type="email"
+                            className="register-input"
+                            value={email}
+                            placeholder="Email"
+                            required
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
+
+                        <input
+                            type="password"
+                            className="register-input"
+                            value={pwd}
+                            placeholder="Contraseña"
+                            required
+                            onChange={(event) => setPwd(event.target.value)}
+                        />
+
+                        <button type="submit" className="register-btn">
+                            Registrarse
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }
