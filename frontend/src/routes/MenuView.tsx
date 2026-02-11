@@ -1,36 +1,27 @@
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
+import Navbar from '../components/Navbar';
+import LoginModal from "../components/LoginModal";
+import './MenuView.css';
 
 export const MenuView = () => {
-    const { user } = useAuth();
+    const { user } = useAuth(); // If we need to check auth logic later
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     return (
-        <>
-            <nav>
-                <div>
-                    <Link to="/">
-                        MiLogo
-                    </Link>
-                </div>
+        <div className="home-container">
+            <Navbar />
 
-                <ul>
-                    <li>
-                        <Link to="/buscar" >Buscar</Link>
-                    </li>
-                    {!user ? (
-                        <li>
-                            <Link to="/login" >Iniciar Sesión</Link>
-                        </li>
-                    ) : (
-                        <li>
-                            <Link to="/mi-cuenta" >Mi Cuenta</Link>
-                        </li>
-                    )}
+            <LoginModal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+            />
 
-                </ul>
-            </nav>
-            <Outlet />
-        </>
-
+            <main className="main-content">
+                {/* Render nested routes below the main content */}
+                <Outlet context={{ setIsLoginModalOpen }} />
+            </main>
+        </div>
     );
 }
