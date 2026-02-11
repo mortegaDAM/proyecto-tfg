@@ -18,21 +18,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            console.log("Dentro de useEffect");
+            console.log("onAuthStateChanged:", user?.email);
             if (user) {
                 try {
-                    const respuesta = await fetch(`http://localhost:8080/api/usuarios/findUid/${auth.currentUser?.uid}`, {
+                    const respuesta = await fetch(`http://localhost:8080/api/usuarios/findUid/${user.uid}`, {
                         method: "GET",
                         headers: {
                             "Content-type": "application/json"
                         }
                     });
-                    const datos = await respuesta.json();
-                    if (!datos.empty) {
-                        setPerfil(datos.data);
+                    if (respuesta.ok) {
+                        const datos = await respuesta.json();
+                        if (datos.data) {
+                            setPerfil(datos.data);
+                        } else {
+                            console.warn("User authenticated in Firebase but not found in backend DB");
+                            setPerfil(null);
+                        }
                     }
                 } catch (error) {
-                    console.error(error);
+                    console.error("Error fetching profile:", error);
                 }
                 setUser(user);
             } else {

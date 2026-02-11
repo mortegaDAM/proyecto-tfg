@@ -45,8 +45,9 @@ export const MiCuentaView = () => {
         } catch (err) {
             console.error(err);
             alert("No se ha podido borrar el usuario");
-
         }
+    }
+
     const handleMisDatos = () => {
         navigate(`/mi-cuenta/datos`);
     }
@@ -62,7 +63,18 @@ export const MiCuentaView = () => {
                 <div className="account-card">
                     <div className="account-header">
                         <h1 className="account-title">Mi Cuenta</h1>
-                        <p className="account-subtitle">Hola, {perfil?.nombre}</p>
+                        <p className="account-subtitle">Panel de control de <strong>{perfil?.nombre}</strong></p>
+                    </div>
+
+                    <div className="account-stats">
+                        <div className="stat-item">
+                            <span className="stat-value">0</span>
+                            <span className="stat-label">Puestos Activos</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-value">0</span>
+                            <span className="stat-label">Clientes en cola</span>
+                        </div>
                     </div>
 
                     <div className="account-actions">
@@ -75,7 +87,7 @@ export const MiCuentaView = () => {
                         <button className="account-btn danger" onClick={handleCloseSession}>
                             <span>🚪</span> Cerrar Sesión
                         </button>
-                        <button onClick={handleDeleteAccount}>Borrar Cuenta</button>
+                        <button className="account-btn danger" onClick={handleDeleteAccount}>Borrar Cuenta</button>
                     </div>
                 </div>
             </div>

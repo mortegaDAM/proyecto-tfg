@@ -16,39 +16,38 @@ export const MisDatosView = () => {
 
     const handleUpdateUser = async (event: React.FormEvent) => {
         event.preventDefault();
-        console.log("handleUpdateUser -> peticion fetch");
 
-        // updateEmail(user o auth.currentUser, emailNuevo)
+        if (!nombre || nombre.trim() === "") {
+            alert("El nombre no puede estar vacío");
+            return;
+        }
 
-        if (nombre === "") {
-            alert("No pueden haber campos vacios");
-        } else {
-
-            if (user && perfil) {
+        if (user && perfil) {
+            try {
                 const usuarioEditado = {
-                    "nombre": nombre,
-                    "email": perfil.email,
-                    "uid": user.uid
+                    ...perfil,
+                    "nombre": nombre
                 }
 
+                const respuesta = await fetch(`http://localhost:8080/api/usuarios/update/${perfil.id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify(usuarioEditado)
+                });
 
-                console.log("Actualizar los datos...")
-                // TODO: hacer el update en server.ts
-                // const respuesta = await fetch("http://localhost:3000/registro", {
-                //     method: "POST",
-                //     headers: {
-                //         "Content-type": "application/json"
-                //     },
-                //     body: JSON.stringify(usuarioEditado)
-                // });
-
-                // if (respuesta.ok) {
-                //     const datos = await respuesta.json();
-
-                //     actualizarPerfil(datos.data);
-
-                //     location.reload();
-                // }
+                if (respuesta.ok) {
+                    const datos = await respuesta.json();
+                    actualizarPerfil(datos.data);
+                    alert("Datos actualizados correctamente");
+                    setEstado(false);
+                } else {
+                    alert("Error al actualizar los datos en el servidor");
+                }
+            } catch (error) {
+                console.error("Error updating user:", error);
+                alert("Error de conexión al actualizar datos");
             }
         }
     }
@@ -83,7 +82,7 @@ export const MisDatosView = () => {
                                 <button className="data-btn primary" onClick={() => setEstado(true)}>Editar Datos</button>
                             </div>
                             <button onClick={handlePassword}>Actualizar Contraseña</button>
-                </div>
+                        </div>
 
                     ) : (
                         <div>

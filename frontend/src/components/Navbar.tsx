@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/AuthProvider';
 import './Navbar.css';
 
 const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { user } = useAuth();
 
     return (
         <nav className="navbar">
@@ -26,13 +28,32 @@ const Navbar: React.FC = () => {
             </div>
 
             <div className="navbar-actions">
-                {location.pathname !== '/registro' && (
+                {user ? (
                     <button
                         className="btn-primary"
-                        onClick={() => navigate('/registro')}
+                        onClick={() => navigate('/mi-cuenta')}
                     >
-                        Registrarse
+                        <span>🏪</span> Mi Cuenta
                     </button>
+                ) : (
+                    <>
+                        {location.pathname !== '/login' && (
+                            <button
+                                className="btn-secondary"
+                                onClick={() => navigate('/login')}
+                            >
+                                Iniciar Sesión
+                            </button>
+                        )}
+                        {location.pathname !== '/registro' && (
+                            <button
+                                className="btn-primary"
+                                onClick={() => navigate('/registro')}
+                            >
+                                Registrarse
+                            </button>
+                        )}
+                    </>
                 )}
             </div>
         </nav>
