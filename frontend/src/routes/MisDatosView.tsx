@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
+import React from 'react';
+import './MisDatosView.css';
 
 export const MisDatosView = () => {
     const { user, perfil, actualizarPerfil } = useAuth();
@@ -50,41 +52,54 @@ export const MisDatosView = () => {
     // TODO: modal para "Cancelar"
 
     return (
-        <>
-            <h1>Mis Datos</h1>
-            {!estado ? (
-                <div>
-                    <ul>
-                        <li>Nombre: {perfil?.nombre}</li>
-                        <li>Email: {perfil?.email}</li>
-                    </ul>
-                    <button onClick={() => setEstado(true)}>Editar Datos</button>
-                </div>
+        <div className="page-wrapper">
+            {/* Navbar handles itself usually, or this is inside Outlet */}
+            <div className="data-container">
+                <div className="data-card">
+                    <h1 className="data-title">Mis Datos</h1>
 
-            ) : (
-                <div>
-                    <form onSubmit={handleUpdateUser}>
-                        <input type="text" value={nombre} placeholder={perfil?.nombre}
-                            onChange={(event) => {
-                                setNombre(event.target.value);
-                            }}
-                        />
-                        {/*<input type="text" value={apellido} placeholder={perfil?.surname}
-                            onChange={(event) => {
-                                setApellido(event.target.value);
-                            }}
-                        />
-                        <input type="text" value={username} placeholder={perfil?.username} required
-                            onChange={(event) => {
-                                setUsername(event.target.value);
-                            }}
-                        />*/}
-                        <button type="submit">Actualizar Datos</button>
-                        <button onClick={() => setEstado(false)}>Cancelar</button>
-                    </form>
-                </div>
-            )}
+                    {!estado ? (
+                        <div>
+                            <ul className="data-list">
+                                <li><strong>Nombre:</strong> {perfil?.nombre}</li>
+                                <li><strong>Email:</strong> {perfil?.email}</li>
+                            </ul>
+                            <div className="data-actions">
+                                <button className="data-btn primary" onClick={() => setEstado(true)}>Editar Datos</button>
+                            </div>
+                        </div>
 
-        </>
+                    ) : (
+                        <div>
+                            <form onSubmit={handleUpdateUser} className="data-form">
+                                <input
+                                    type="text"
+                                    className="data-input"
+                                    value={nombre}
+                                    placeholder={perfil?.nombre}
+                                    onChange={(event) => {
+                                        setNombre(event.target.value);
+                                    }}
+                                />
+                                {/*<input type="text" value={apellido} placeholder={perfil?.surname}
+                                    onChange={(event) => {
+                                        setApellido(event.target.value);
+                                    }}
+                                />
+                                <input type="text" value={username} placeholder={perfil?.username} required
+                                    onChange={(event) => {
+                                        setUsername(event.target.value);
+                                    }}
+                                />*/}
+                                <div className="data-actions">
+                                    <button type="submit" className="data-btn primary">Actualizar Datos</button>
+                                    <button type="button" className="data-btn secondary" onClick={() => setEstado(false)}>Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
     );
 }

@@ -22,7 +22,8 @@ export const RegisterView = () => {
             const usuarioNuevo = {
                 "nombre": name,
                 "email": email,
-                "uid": userCredential.user.uid
+                "uid": userCredential.user.uid,
+                "tipo": "PUESTO"
             }
 
             const respuesta = await fetch("http://localhost:8080/api/usuarios/createUsuario", {
@@ -62,13 +63,13 @@ export const RegisterView = () => {
             <Navbar />
             <div className="register-container">
                 <div className="register-card">
-                    <h1 className="register-title">Crear Cuenta</h1>
+                    <h1 className="register-title">Registrar Puesto</h1>
                     <form onSubmit={handleRegister} className="register-form">
                         <input
                             type="text"
                             className="register-input"
                             value={name}
-                            placeholder="Usuario"
+                            placeholder="Nombre del Puesto"
                             required
                             onChange={(event) => setName(event.target.value)}
                         />

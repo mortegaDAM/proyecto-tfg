@@ -1,80 +1,81 @@
 .home-container {
+    background-color: var(--background-color);
     min-height: 100vh;
-    background-color: transparent;
-    /* Inherits from body */
 }
 
 .main-content {
-    padding: 2rem;
+    padding: 3rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
 }
 
 .section-header {
-    margin-bottom: 2rem;
-    text-align: left;
+    margin-bottom: 3rem;
+    text-align: center;
+    /* Center header for formal look */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .section-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(90deg, #333 0%, #666 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    /* Removed gradient */
 }
 
 .section-subtitle {
-    color: #666;
-    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    line-height: 1.6;
 }
 
 .markets-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 2rem;
     padding-bottom: 4rem;
 }
 
 .market-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
+    background: var(--surface-color);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     height: 100%;
     cursor: pointer;
-    position: relative;
 }
 
 .market-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: #d1d5db;
 }
 
 .card-image-container {
     width: 100%;
-    height: 200px;
+    height: 220px;
     overflow: hidden;
     position: relative;
-    background-color: #eee;
+    background-color: #e5e7eb;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.4s ease;
 }
 
 .market-card:hover .card-image {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .card-content {
@@ -90,7 +91,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 600;
-    color: #646cff;
+    color: var(--primary-color);
     margin-bottom: 0.5rem;
 }
 
@@ -98,14 +99,14 @@
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
-    color: #213547;
+    color: var(--text-primary);
 }
 
 .market-description {
     font-size: 0.95rem;
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     flex-grow: 1;
 }
 
@@ -115,7 +116,7 @@
     align-items: center;
     margin-top: auto;
     padding-top: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid #f3f4f6;
 }
 
 .rating {
@@ -123,7 +124,7 @@
     align-items: center;
     gap: 0.25rem;
     font-weight: 600;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .star-icon {
@@ -134,57 +135,16 @@
     padding: 0.25rem 0.75rem;
     background: #ecfdf5;
     color: #059669;
+    /* Green for Open */
     border-radius: 9999px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
+    border: 1px solid #d1fae5;
 }
 
 .status-badge.closed {
     background: #fef2f2;
     color: #dc2626;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .section-title {
-        background: linear-gradient(90deg, #fff 0%, #ccc 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .section-subtitle {
-        color: #aaa;
-    }
-
-    .market-card {
-        background: rgba(40, 40, 40, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .market-card:hover {
-        background: rgba(50, 50, 50, 0.9);
-    }
-
-    .market-title,
-    .rating {
-        color: #fff;
-    }
-
-    .market-description {
-        color: #bbb;
-    }
-
-    .card-footer {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .status-badge {
-        background: rgba(5, 150, 105, 0.2);
-        color: #34d399;
-    }
-
-    .status-badge.closed {
-        background: rgba(220, 38, 38, 0.2);
-        color: #f87171;
-    }
+    /* Red for Closed */
+    border-color: #fee2e2;
 }
