@@ -42,7 +42,6 @@ public class PuestoService {
         }
         long numeroActual = puesto.getNumeroActual();
         puesto.setNumeroActual(numeroActual + 1);
-        puestoRepository.save(puesto);
     }
 
     //Logica para reiniciar puestos con ??
