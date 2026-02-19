@@ -34,4 +34,17 @@ public class PuestoService {
     public void deletePuesto(long id){
         puestoRepository.deleteById(id);
     }
+
+    //Aqui va la logica de aumentar turno de puesto
+    public void aumentarTurnoPuesto(Puesto puesto) {
+        if (puesto == null) {
+            throw new IllegalArgumentException("Puesto cannot be null");
+        }
+        long numeroActual = puesto.getNumeroActual();
+        puesto.setNumeroActual(numeroActual + 1);
+        puestoRepository.save(puesto);
+    }
+
+    //Logica para reiniciar puestos con ??
+    
 }

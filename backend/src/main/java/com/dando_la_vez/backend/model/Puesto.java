@@ -1,7 +1,6 @@
 package com.dando_la_vez.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +33,7 @@ public class Puesto {
     @JoinColumn(name = "id_mercado")
     @JsonBackReference("puesto-mercado")
     private Mercado mercado;
+    private long numeroActual;
 
 //    @JsonManagedReference("cliente-turno-puesto")
     @ManyToMany(mappedBy = "listaPuestos")
@@ -50,5 +50,13 @@ public class Puesto {
         this.abierto = abierto;
         this.usuario = usuario;
         this.mercado = mercado;
+    }
+    public Puesto(int id, String nombre, boolean abierto, Usuario usuario, Mercado mercado, long numeroActual) {
+        this.id = id;
+        this.nombre = nombre;
+        this.abierto = abierto;
+        this.usuario = usuario;
+        this.mercado = mercado;
+        this.numeroActual = numeroActual;
     }
 }
