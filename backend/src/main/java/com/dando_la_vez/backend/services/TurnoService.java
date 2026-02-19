@@ -1,7 +1,5 @@
 package com.dando_la_vez.backend.services;
 
-
-import org.hibernate.mapping.List;
 import org.springframework.stereotype.Service;
 
 import com.dando_la_vez.backend.model.Cliente;
@@ -9,17 +7,6 @@ import com.dando_la_vez.backend.model.Puesto;
 
 @Service
 public class TurnoService {
-
-    //Obtener ultimo numero de la lista
-    public long ultimoNumeroPuestoCliente(Puesto puesto) {
-        return puesto.getListaClientes().size();
-    }
-    
-    //asignar ultimo numero de la lista
-    public long asignarNumeroTurnoCliente(Puesto puesto, Cliente cliente) {
-        return ultimoNumeroPuestoCliente(puesto)+1;
-    }
-
     //Buscar puesto cliente
     public long numeroCliente(Puesto puesto, Cliente cliente){
         return puesto.getListaClientes().indexOf(cliente) + 1;
@@ -45,5 +32,15 @@ public class TurnoService {
     puesto.getListaClientes().add(nuevaPosicion, cliente);
     
     return true;
-}
     }
+
+    //eliminar turno
+    public boolean cancelarTurno(Puesto puesto, Cliente cliente) {
+
+    boolean eliminado = puesto.getListaClientes().remove(cliente);
+    if (eliminado) {
+        return true;
+    }
+    return false;
+}
+}
