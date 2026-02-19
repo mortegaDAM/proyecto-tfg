@@ -38,12 +38,11 @@ public class TurnoController {
             Optional<Cliente> cliente = clienteService.getClienteId(idCliente);
 
             if (puesto.isPresent() && cliente.isPresent()) {
-                // LLamamos al service para obtener el índice + 1
                 long posicion = turnoService.numeroCliente(puesto.get(), cliente.get());
                 
                 response.put("code", 1);
                 response.put("message", "Posición obtenida correctamente");
-                response.put("data", posicion); // <--- Ahora devuelve el número (long)
+                response.put("data", posicion);
                 return ResponseEntity.ok(response);
             }
             
@@ -67,7 +66,6 @@ public class TurnoController {
                 
                 if (exito) {
                     response.put("code", 1);
-                    // Usamos String.format o concatenación limpia para el mensaje dinámico
                     response.put("message", "Turno aplazado 5 posiciones correctamente");
                     response.put("data", 5); 
                     return ResponseEntity.ok(response);
