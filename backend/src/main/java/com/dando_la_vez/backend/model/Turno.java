@@ -23,6 +23,8 @@ public class Turno {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_puesto")
     private Puesto puesto;
+
+    @Column(name = "numero_turno")
     private int numeroTurno;
 
     public Turno(Cliente cliente, Puesto puesto, int numeroTurno) {
