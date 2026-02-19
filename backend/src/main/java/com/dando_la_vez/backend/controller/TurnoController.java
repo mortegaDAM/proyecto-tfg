@@ -17,7 +17,8 @@ import com.dando_la_vez.backend.services.ClienteService; // Asumiendo que existe
 
 @RestController
 @RequestMapping("api/turnos")
-@CrossOrigin(origins = "*", methods = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
+@CrossOrigin(origins = "*", methods = { RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST,
+        RequestMethod.PUT })
 public class TurnoController {
 
     @Autowired
@@ -58,7 +59,8 @@ public class TurnoController {
 
     // 2. Aplazar turno
     @PutMapping("/aplazar/puesto/{idPuesto}/cliente/{idCliente}/{posiciones}")
-    public ResponseEntity<?> aplazarTurno(@PathVariable int idPuesto, @PathVariable int idCliente, @PathVariable long posiciones) {
+    public ResponseEntity<?> aplazarTurno(@PathVariable int idPuesto, @PathVariable int idCliente,
+            @PathVariable long posiciones) {
         Map<String, Object> response = new HashMap<>();
         try {
             Optional<Puesto> puesto = puestoService.getPuestoId(idPuesto);
