@@ -46,7 +46,11 @@ public class PuestoService {
     }
 
     //Logica para reiniciar puestos con ??
-
-
+    public void reiniciarPuestos(Puesto puesto){
+        puesto.setNumeroActual(0);
+        if(puesto.getListaClientes() != null){
+            puesto.listaClientes.clear();
+        }
+    }
 
 }
