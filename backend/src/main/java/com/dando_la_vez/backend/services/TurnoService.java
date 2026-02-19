@@ -1,59 +1,49 @@
 package com.dando_la_vez.backend.services;
 
-import com.dando_la_vez.backend.model.Puesto;
-import com.dando_la_vez.backend.model.Turno;
-import com.dando_la_vez.backend.repository.PuestoRepository;
-import com.dando_la_vez.backend.repository.TurnoRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Optional;
 
+import org.hibernate.mapping.List;
+import org.springframework.stereotype.Service;
+
+import com.dando_la_vez.backend.model.Cliente;
+import com.dando_la_vez.backend.model.Puesto;
 
 @Service
-@Transactional
 public class TurnoService {
-    @Autowired
-    private TurnoRepository turnoRepository;
-    @Autowired
-    private PuestoService puestoService;
 
-
-    public List<Turno> getAllTurnos(){
-        return turnoRepository.findAll();
+    //Obtener ultimo numero de la lista
+    public long ultimoNumeroPuestoCliente(Puesto puesto) {
+        return puesto.getListaClientes().size();
+    }
+    
+    //asignar ultimo numero de la lista
+    public long asignarNumeroTurnoCliente(Puesto puesto, Cliente cliente) {
+        return ultimoNumeroPuestoCliente(puesto)+1;
     }
 
-    public Optional<Turno> getTurnoId(long id){
-        return turnoRepository.findById(id);
+    //Buscar puesto cliente
+    public long numeroCliente(Puesto puesto, Cliente cliente){
+        return puesto.getListaClientes().indexOf(cliente) + 1;
     }
+    //Comprobar turno con puesto
+    public Boolean comprobarTurno(Puesto puesto, Cliente cliente) {
+    long actual = puesto.getNumeroActual();
+    int indiceCliente = puesto.getListaClientes().indexOf(cliente);
+    return actual == (indiceCliente + 1);
+}
 
-    public Turno createTurno(Turno turno){
-        return turnoRepository.save(turno);
-    }
-
-    public Turno updateTurno(Turno turno){
-        return turnoRepository.save(turno);
-    }
-
-    public void deleteTurno(long id){
-        turnoRepository.deleteById(id);
-    }
-
-    //aqui comprueba que si el turno del puesto es igual al turno de cliente
-    public boolean comprobarTurno(Turno turno){
-        Optional<Puesto> puestoElegido = puestoService.getPuestoId(turno.getPuesto().getId());
-        if (puestoElegido.isPresent() && turno.getNumeroTurno() == puestoElegido.get().getNumeroActual()){
-            return true;
-        }
+    /// Aplazar turno: Mover al cliente x posiciones hacia atrás
+    public boolean aplazarTurno(Puesto puesto, Cliente cliente, long numeroTurnos) {
+       int indiceActual = puesto.getListaClientes().indexOf(cliente);
+    if (indiceActual == -1) {
         return false;
     }
+    puesto.getListaClientes().remove(indiceActual);
 
-    //Aviso X turnos antes
+    int desplazamiento = (int) numeroTurnos;
 
-    //Aplazar turno
-
-    //Cancelar turno
-
-     
+    int nuevaPosicion = Math.min(indiceActual + desplazamiento, puesto.getListaClientes().size());
+    puesto.getListaClientes().add(nuevaPosicion, cliente);
+    
+    return true;
 }
+    }

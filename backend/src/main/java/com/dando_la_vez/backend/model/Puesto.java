@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,7 +38,7 @@ public class Puesto {
 
 //    @JsonManagedReference("cliente-turno-puesto")
     @ManyToMany(mappedBy = "listaPuestos")
-    public Set<Cliente> listaClientes;
+    public List<Cliente> listaClientes;
 
 
     public Puesto(String nombre, boolean abierto) {
