@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,7 @@ public class Cliente {
     @JoinTable(name = "turnos",
             joinColumns = {@JoinColumn(name = "id_cliente")},
             inverseJoinColumns = {@JoinColumn(name = "id_puesto")})
-    private Set<Puesto> listaPuestos;
+    private List<Puesto> listaPuestos;
 
     public Cliente(String email, String nombre) {
         this.email = email;
