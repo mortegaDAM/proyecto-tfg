@@ -12,10 +12,11 @@ export default function Login() {
         event.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, pwd);
-            console.log("Iniciado sesion correctamente");
+            console.log("Iniciado sesión en Firebase correctamente");
+            // App state will be updated by AuthProvider's onAuthStateChanged
             navigate('/');
         } catch (error) {
-            console.error("No iniciado sesion " + error);
+            console.error("Error al iniciar sesión:", error);
             alert("Email o Contraseña INCORRECTOS");
         }
     }

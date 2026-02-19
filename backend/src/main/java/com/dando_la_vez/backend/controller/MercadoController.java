@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/Mercado")
+@RequestMapping("api/mercados")
 @CrossOrigin(origins = "*", methods = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 public class MercadoController {
     @Autowired
@@ -73,7 +73,7 @@ public class MercadoController {
     }
 
 
-    @PostMapping("/createMercado")
+    @PostMapping("/create")
     public ResponseEntity<?> createMercado(@RequestBody Mercado mercado){
         Map<String, Object> response = new HashMap<>();
         try{
@@ -91,7 +91,7 @@ public class MercadoController {
         }
     }
 
-    @PutMapping("/updateMercado/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateMercado(@RequestBody Mercado mercado, @PathVariable int id){
         Map<String, Object> response = new HashMap<>();
         try{
