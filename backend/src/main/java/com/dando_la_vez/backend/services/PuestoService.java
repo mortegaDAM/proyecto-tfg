@@ -19,7 +19,7 @@ public class PuestoService {
         return puestoRepository.findAll();
     }
 
-    public Optional<Puesto> getPuestoId(long id){
+    public Optional<Puesto> getPuestoId(int id){
         return puestoRepository.findById(id);
     }
 
@@ -31,7 +31,7 @@ public class PuestoService {
         return puestoRepository.save(puesto);
     }
 
-    public void deletePuesto(long id){
+    public void deletePuesto(int id){
         puestoRepository.deleteById(id);
     }
 
@@ -42,11 +42,14 @@ public class PuestoService {
         }
         long numeroActual = puesto.getNumeroActual();
         puesto.setNumeroActual(numeroActual + 1);
-        puestoRepository.save(puesto);
     }
 
     //Logica para reiniciar puestos con ??
-
-
+    public void reiniciarPuestos(Puesto puesto){
+        puesto.setNumeroActual(0);
+        if(puesto.getListaClientes() != null){
+            puesto.listaClientes.clear();
+        }
+    }
 
 }

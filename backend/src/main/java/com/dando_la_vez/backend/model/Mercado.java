@@ -15,7 +15,7 @@ import java.util.List;
 public class Mercado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @Column(name = "nombre")
     private String nombre;
 

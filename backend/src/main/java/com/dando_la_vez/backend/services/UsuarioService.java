@@ -20,7 +20,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Optional<Usuario> findById(long id){
+    public Optional<Usuario> findById(int id){
         return usuarioRepository.findById(id);
     }
 
@@ -37,7 +37,7 @@ public class UsuarioService {
         return usuarioRepository.findByUid(uid);
     }
 
-    public void deleteById(long id){
+    public void deleteById(int id){
         usuarioRepository.deleteById(id);
     }
 

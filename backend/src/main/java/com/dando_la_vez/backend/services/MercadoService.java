@@ -16,7 +16,7 @@ public class MercadoService {
     public List<Mercado> getAllMercados(){
         return mercadoRepository.findAll();
     }
-    public Optional<Mercado> findById(long id){
+    public Optional<Mercado> findById(int id){
         return mercadoRepository.findById(id);
     }
     public Mercado createMercado(Mercado mercado){
