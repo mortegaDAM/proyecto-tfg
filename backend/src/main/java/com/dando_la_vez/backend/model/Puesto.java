@@ -18,7 +18,7 @@ import java.util.List;
 public class Puesto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column
     private String nombre;
     @Column
