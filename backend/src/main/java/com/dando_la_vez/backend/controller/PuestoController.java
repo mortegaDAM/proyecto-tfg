@@ -156,7 +156,7 @@ public class PuestoController {
             Optional<Puesto> puestoEncontrado = puestoService.getPuestoId(id);
             if (puestoEncontrado.isPresent()) {
                 puestoService.aumentarTurnoPuesto(puestoEncontrado.get());
-                puestoService.updatePuesto(puestoEncontrado)
+                puestoService.updatePuesto(puestoEncontrado.get());
                 response.put("code", 1);
                 response.put("message", "Turno aumentado correctamente");
                 response.put("total", 1);
