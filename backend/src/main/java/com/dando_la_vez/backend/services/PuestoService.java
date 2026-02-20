@@ -19,7 +19,7 @@ public class PuestoService {
         return puestoRepository.findAll();
     }
 
-    public Optional<Puesto> getPuestoId(int id){
+    public Optional<Puesto> getPuestoId(long id){
         return puestoRepository.findById(id);
     }
 
@@ -31,7 +31,7 @@ public class PuestoService {
         return puestoRepository.save(puesto);
     }
 
-    public void deletePuesto(int id){
+    public void deletePuesto(long id){
         puestoRepository.deleteById(id);
     }
 
