@@ -24,7 +24,7 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Optional<Cliente> getClienteId(long id){
+    public Optional<Cliente> getClienteId(int id){
         return clienteRepository.findById(id);
     }
 
@@ -32,7 +32,7 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente pedirTurno(long idCliente, long idPuesto){
+    public Cliente pedirTurno(int idCliente, int idPuesto){
         Cliente clienteEncontrado = clienteRepository.findById(idCliente).get();
         Puesto puestoEncontrado = puestoRepository.findById(idPuesto).get();
         clienteEncontrado.addPuestos(puestoEncontrado);
