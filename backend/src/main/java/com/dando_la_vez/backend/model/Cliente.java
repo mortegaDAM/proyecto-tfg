@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,13 +26,13 @@ public class Cliente {
     @Column
     private String email;
 
-
-    @JsonBackReference("cliente-turno-puesto")
+    @JsonIgnore
+//    @JsonBackReference("cliente-turno-puesto")
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "turnos",
             joinColumns = {@JoinColumn(name = "id_cliente")},
             inverseJoinColumns = {@JoinColumn(name = "id_puesto")})
-    private Set<Puesto> listaPuestos;
+    private List<Puesto> listaPuestos;
 
     public Cliente(String email, String nombre) {
         this.email = email;

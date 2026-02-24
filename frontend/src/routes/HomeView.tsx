@@ -84,7 +84,6 @@ export const HomeView = () => {
     };
 
     useEffect(() => {
-        console.log("USE EFFECT HOME");
         const getMercados = async () => {
             try {
                 const respuesta = await fetch("http://localhost:8080/api/Mercado/getAll");

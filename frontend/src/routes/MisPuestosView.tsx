@@ -1,41 +1,53 @@
 import { useNavigate } from "react-router-dom";
 import './MisPuestosView.css';
-
-// Inteface for visualization (mock)
-interface Puesto {
-    id: number;
-    nombre: string;
-    descripcion: string;
-    imagen: string;
-}
-
-const MOCK_PUESTOS: Puesto[] = [
+import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/AuthProvider";
+import { type Puesto } from "../interfaces/interfaces"; const MOCK_PUESTOS: Puesto[] = [
     {
         id: 1,
-        nombre: "Frutería Pepe",
-        descripcion: "Las mejores frutas de temporada traídas directamente del campo.",
-        imagen: "https://placehold.co/600x400/orange/white?text=Fruteria"
+        nombre: "Frutas y Verduras Mario",
+        abierto: true,
+        listaClientes: []
     },
     {
         id: 2,
-        nombre: "Carnicería Los Hermanos",
-        descripcion: "Carnes selectas y cortes premium con la mejor calidad.",
-        imagen: "https://placehold.co/600x400/red/white?text=Carniceria"
+        nombre: "Carnicería El Chuleton",
+        abierto: false,
+        listaClientes: []
     },
     {
         id: 3,
-        nombre: "Pescadería Mar Azul",
-        descripcion: "Pescado fresco del día, traído de las mejores lonjas.",
-        imagen: "https://placehold.co/600x400/blue/white?text=Pescaderia"
+        nombre: "Pescadería La Mar",
+        abierto: true,
+        listaClientes: []
     }
 ];
 
 export const MisPuestosView = () => {
+    const navigate = useNavigate();
+    const { perfil } = useAuth();
+    const [puestos, setPuestos] = useState<Puesto[]>();
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            if (!perfil) return;
+            const respuesta = await fetch(`http://localhost:8080/api/usuarios/listaPuestos/${perfil?.id}`);
+            if (respuesta.ok) {
+                const datos = await respuesta.json();
+                setPuestos(datos.data);
+            }
+        }
+
+        fetchData();
+    }, [perfil]);
 
     const handleOnClick = () => {
-        // Navigate to add puesto or open modal
-        alert("Navegar a crear puesto (Falta implementar vista)");
+        navigate('/mi-cuenta/puestos/nuevo');
     }
+
+    // Usamos los puestos del estado si existen, si no los de mock para visualización
+    const displayPuestos = puestos && puestos.length > 0 ? puestos : MOCK_PUESTOS;
 
     return (
         <div className="page-wrapper">
@@ -48,14 +60,18 @@ export const MisPuestosView = () => {
                 </div>
 
                 <div className="puestos-grid">
-                    {MOCK_PUESTOS.map((puesto) => (
+                    {displayPuestos.map((puesto) => (
                         <div key={puesto.id} className="puesto-card">
-                            <div className="puesto-image-container">
-                                <img src={puesto.imagen} alt={puesto.nombre} className="puesto-image" />
+                            <div className="puesto-image-placeholder">
+                                🏪
                             </div>
                             <div className="puesto-content">
                                 <h2 className="puesto-name">{puesto.nombre}</h2>
-                                <p className="puesto-description">{puesto.descripcion}</p>
+                                <p className="puesto-status">
+                                    Estado: <span className={puesto.abierto ? "status-abierto" : "status-cerrado"}>
+                                        {puesto.abierto ? "Abierto" : "Cerrado"}
+                                    </span>
+                                </p>
 
                                 <div className="puesto-actions">
                                     <button className="puesto-btn edit">Editar</button>

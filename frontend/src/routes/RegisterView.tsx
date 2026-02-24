@@ -1,23 +1,31 @@
-import { createUserWithEmailAndPassword, } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { useAuth } from "../hooks/AuthProvider";
 import './RegisterView.css';
+
 
 
 export const RegisterView = () => {
     const navigate = useNavigate();
+    const { actualizarPerfil } = useAuth();
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
-    // Using 'name' state for "Usuario" field as per current backend logic mapping
+    // const [username, setUsername] = useState('');
     const [name, setName] = useState('');
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, pwd);
+
+            // Actualizar el perfil en Firebase (displayName)
+            await updateProfile(userCredential.user, {
+                displayName: name
+            });
 
             const usuarioNuevo = {
                 "nombre": name,
@@ -26,7 +34,7 @@ export const RegisterView = () => {
                 "tipo": "PUESTO"
             }
 
-            const respuesta = await fetch("http://localhost:8080/api/usuarios/createUsuario", {
+            const respuesta = await fetch("http://localhost:8080/api/usuarios/create", {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json"
@@ -37,19 +45,21 @@ export const RegisterView = () => {
 
             if (respuesta.ok) {
                 const datos = await respuesta.json();
-                console.log(datos);
+
+                // Actualizamos el estado global para evitar la carrera entre Firebase y DB
+                actualizarPerfil(datos.data);
 
                 alert('Usuario Registrado Correctamente');
                 navigate('/');
 
             } else {
-                alert('No se ha podido registrar el usuario');
+                alert('No se ha podido registrar el usuario en la base de datos');
             }
 
 
         } catch (error) {
-            alert("Email ya registrado anteriormente");
-            console.error("Registro Error: " + error);
+            alert("Error en el registro: " + error);
+            console.error("Registro Error: ", error);
         }
     }
 
@@ -96,6 +106,8 @@ export const RegisterView = () => {
                             Registrarse
                         </button>
                     </form>
+                    <button onClick={() => navigate('/')}>Volver a inicio</button>
+
                 </div>
             </div>
         </div>

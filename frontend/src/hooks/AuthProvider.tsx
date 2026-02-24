@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import { type AuthContextInterface, type UsuarioFirebase } from "../interfaces/interfaces";
+import { type AuthContextInterface, type Usuario } from "../interfaces/interfaces";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
@@ -8,31 +8,36 @@ const AuthContext = createContext<AuthContextInterface | null>(null);
 
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [perfil, setPerfil] = useState<UsuarioFirebase | null>(null);
+    const [perfil, setPerfil] = useState<Usuario | null>(null);
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User|null>(null);
+    const [user, setUser] = useState<User | null>(null);
 
-    const actualizarPerfil = (nuevoPerfil: UsuarioFirebase | null) => {
+    const actualizarPerfil = (nuevoPerfil: Usuario | null) => {
         setPerfil(nuevoPerfil);
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            console.log("Dentro de useEffect");
+            console.log("onAuthStateChanged:", user?.email);
             if (user) {
                 try {
-                    const respuesta = await fetch(`http://localhost:8080/api/usuarios/findUid/${auth.currentUser?.uid}`, {
+                    const respuesta = await fetch(`http://localhost:8080/api/usuarios/findUid/${user.uid}`, {
                         method: "GET",
                         headers: {
                             "Content-type": "application/json"
                         }
                     });
-                    const datos = await respuesta.json();
-                    if (!datos.empty) {
-                        setPerfil(datos.data);
+                    if (respuesta.ok) {
+                        const datos = await respuesta.json();
+                        if (datos.data) {
+                            setPerfil(datos.data);
+                        } else {
+                            console.warn("User authenticated in Firebase but not found in backend DB");
+                            setPerfil(null);
+                        }
                     }
                 } catch (error) {
-                    console.error(error);
+                    console.error("Error fetching profile:", error);
                 }
                 setUser(user);
             } else {
@@ -43,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setLoading(false);
         });
         return unsubscribe;
-    },[]);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, perfil, loading, actualizarPerfil }}>

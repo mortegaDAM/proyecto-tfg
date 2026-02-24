@@ -11,6 +11,8 @@ import Login from "./routes/LoginView";
 import { PaginaNoExistente } from "./routes/PaginaNoExistente";
 import { HomeView } from "./routes/HomeView";
 import { AuthProvider } from "./hooks/AuthProvider";
+import { PrivateRoute } from "./hooks/PrivateRoute";
+import { CrearPuestoView } from "./routes/CrearPuestoView";
 
 function App() {
 
@@ -23,11 +25,13 @@ function App() {
               <Route element={<MenuView />}>
                 {/*Ruta Principal*/}
                 <Route index element={<HomeView />} />
-                {/*Necesita si o si tener user y perfil (useAuth) */}
-                <Route path='mi-cuenta' element={<MiCuentaView />} />
-                <Route path='mi-cuenta/puestos' element={<MisPuestosView />} />
-                <Route path='mi-cuenta/datos' element={<MisDatosView />} />
-
+                {/*Necesita SIEMPRE tener user y perfil (useAuth) */}
+                <Route element={<PrivateRoute />}>
+                  <Route path='mi-cuenta' element={<MiCuentaView />} />
+                  <Route path='mi-cuenta/puestos' element={<MisPuestosView />} />
+                  <Route path='mi-cuenta/puestos/nuevo' element={<CrearPuestoView />} />
+                  <Route path='mi-cuenta/datos' element={<MisDatosView />} />
+                </Route>
               </Route>
             </Route>
 
