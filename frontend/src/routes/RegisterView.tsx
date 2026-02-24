@@ -73,13 +73,13 @@ export const RegisterView = () => {
             <Navbar />
             <div className="register-container">
                 <div className="register-card">
-                    <h1 className="register-title">Registrar Puesto</h1>
+                    <h1 className="register-title">Registrarse</h1>
                     <form onSubmit={handleRegister} className="register-form">
                         <input
                             type="text"
                             className="register-input"
                             value={name}
-                            placeholder="Nombre del Puesto"
+                            placeholder="Nombre"
                             required
                             onChange={(event) => setName(event.target.value)}
                         />
