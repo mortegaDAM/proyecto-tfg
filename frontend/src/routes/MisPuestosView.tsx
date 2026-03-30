@@ -6,19 +6,16 @@ import { type Puesto } from "../interfaces/interfaces"; const MOCK_PUESTOS: Pues
     {
         id: 1,
         nombre: "Frutas y Verduras Mario",
-        abierto: true,
         listaClientes: []
     },
     {
         id: 2,
         nombre: "Carnicería El Chuleton",
-        abierto: false,
         listaClientes: []
     },
     {
         id: 3,
         nombre: "Pescadería La Mar",
-        abierto: true,
         listaClientes: []
     }
 ];
@@ -62,16 +59,9 @@ export const MisPuestosView = () => {
                 <div className="puestos-grid">
                     {displayPuestos.map((puesto) => (
                         <div key={puesto.id} className="puesto-card">
-                            <div className="puesto-image-placeholder">
-                                🏪
-                            </div>
+
                             <div className="puesto-content">
                                 <h2 className="puesto-name">{puesto.nombre}</h2>
-                                <p className="puesto-status">
-                                    Estado: <span className={puesto.abierto ? "status-abierto" : "status-cerrado"}>
-                                        {puesto.abierto ? "Abierto" : "Cerrado"}
-                                    </span>
-                                </p>
 
                                 <div className="puesto-actions">
                                     <button className="puesto-btn edit">Editar</button>

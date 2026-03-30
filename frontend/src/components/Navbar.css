@@ -4,9 +4,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
-    background: #ffffff;
-    box-shadow: var(--shadow-sm);
-    /* Subtle shadow for formal look */
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -23,11 +23,11 @@
     font-weight: 700;
     margin: 0;
     cursor: pointer;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    background: var(--primary-gradient);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
 }
 
 .navbar-center {
@@ -46,19 +46,19 @@
 
 .search-icon {
     position: absolute;
-    left: 12px;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 .search-input {
     width: 100%;
-    padding: 0.75rem 1rem 0.75rem 2.5rem;
-    border-radius: 9999px;
-    /* Rounded pill shape */
-    border: 1px solid var(--border-color);
-    background: #f3f4f6;
+    padding: 0.75rem 1.25rem 0.75rem 2.75rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    background: var(--surface-container-low);
     font-size: 0.95rem;
     color: var(--text-primary);
     transition: all 0.2s ease;
@@ -66,9 +66,9 @@
 
 .search-input:focus {
     outline: none;
-    background: #fff;
+    background: var(--surface-container-lowest);
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
 }
 
 .search-input::placeholder {
@@ -78,26 +78,65 @@
 .navbar-actions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .btn-primary {
-    padding: 0.625rem 1.25rem;
-    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
     border: none;
-    background: var(--primary-color);
+    background: var(--primary-gradient);
     color: white;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-    background: var(--primary-hover);
+    transform: translateY(-1px);
     box-shadow: var(--shadow-md);
+    filter: brightness(1.05);
 }
 
-/* Dark mode overrides if system preference is ignored but keeping clean */
-/* Since user requested 'light mode much better', we focus on that. */
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--surface-container-low);
+    border-color: var(--primary-hover);
+    color: var(--primary-hover);
+}
+
+/* Auth Profile Icon placeholder style */
+.navbar-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface-container-high);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.navbar-profile:hover {
+    background: var(--surface-container-highest);
+}

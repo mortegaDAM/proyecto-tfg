@@ -66,17 +66,6 @@ export const MiCuentaView = () => {
                         <p className="account-subtitle">Panel de control de <strong>{perfil?.nombre}</strong></p>
                     </div>
 
-                    <div className="account-stats">
-                        <div className="stat-item">
-                            <span className="stat-value">0</span>
-                            <span className="stat-label">Puestos Activos</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-value">0</span>
-                            <span className="stat-label">Clientes en cola</span>
-                        </div>
-                    </div>
-
                     <div className="account-actions">
                         <button className="account-btn primary" onClick={handleMisDatos}>
                             <span>👤</span> Mis Datos
