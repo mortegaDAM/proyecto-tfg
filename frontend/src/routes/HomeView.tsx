@@ -1,18 +1,10 @@
 
 import { useEffect, useState } from "react";
-import type { Mercados } from "../interfaces/interfaces";
+import type { Mercado, MarketMock } from "../interfaces/interfaces";
 import { Link, useOutletContext } from "react-router-dom";
+import { MercadoView } from "./MercadoView";
 
-// Interface for Mock Data (Visuals)
-interface MarketMock {
-    id: number;
-    name: string;
-    category: string;
-    description: string;
-    image: string;
-    rating: number;
-    isOpen: boolean;
-}
+
 
 const MOCK_MARKETS: MarketMock[] = [
     {
@@ -73,7 +65,7 @@ const MOCK_MARKETS: MarketMock[] = [
 
 export const HomeView = () => {
     // Logic from backend (preserved as requested)
-    const [mercados, setMercados] = useState<Mercados[]>();
+    const [mercados, setMercados] = useState<Mercado[]>();
 
     // Access context from MenuView Layout if needed (e.g. for opening login modal)
     // const { setIsLoginModalOpen } = useOutletContext<any>(); 
@@ -86,7 +78,7 @@ export const HomeView = () => {
     useEffect(() => {
         const getMercados = async () => {
             try {
-                const respuesta = await fetch("http://localhost:8080/api/Mercado/getAll");
+                const respuesta = await fetch("http://localhost:8080/api/mercados/getAll");
                 if (respuesta.ok) {
                     const datos = await respuesta.json();
                     setMercados(datos.data);
@@ -115,36 +107,38 @@ export const HomeView = () => {
             <div className="markets-grid">
                 {MOCK_MARKETS.map((market) => (
                     <div key={market.id} className="market-card" onClick={handleMarketClick}>
-                        <div className="card-image-container">
-                            <img src={market.image} alt={market.name} className="card-image" />
-                        </div>
-
-                        <div className="card-content">
-                            <span className="market-category">{market.category}</span>
-                            <h3 className="market-title">{market.name}</h3>
-                            <p className="market-description">{market.description}</p>
-
-                            <div className="card-footer">
-                                <div className="rating">
-                                    <span className="star-icon">★</span>
-                                    <span>{market.rating}</span>
-                                </div>
-                                <span className={`status-badge ${!market.isOpen ? 'closed' : ''}`}>
-                                    {market.isOpen ? 'Abierto' : 'Cerrado'}
-                                </span>
+                        <Link to={`mercado/${market.id}`} state={{ nombreMercado: market.name }}>
+                            <div className="card-image-container">
+                                <img src={market.image} alt={market.name} className="card-image" />
                             </div>
-                        </div>
+
+                            <div className="card-content">
+                                <span className="market-category">{market.category}</span>
+                                <h3 className="market-title">{market.name}</h3>
+                                <p className="market-description">{market.description}</p>
+
+                                <div className="card-footer">
+                                    <div className="rating">
+                                        <span className="star-icon">★</span>
+                                        <span>{market.rating}</span>
+                                    </div>
+                                    <span className={`status-badge ${!market.isOpen ? 'closed' : ''}`}>
+                                        {market.isOpen ? 'Abierto' : 'Cerrado'}
+                                    </span>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
                 ))}
             </div>
 
             {/* 
+            <h1>Los Últimos Mercados (Backend Data)</h1>
             <section>
-                <h1>Los Últimos Mercados (Backend Data)</h1>
                 {!mercados ? (
                     <h2>Error al cargar los mercados o lista vacía</h2>
                 ) : (
-                    mercados.map((mercado: Mercados) => (
+                    mercados.map((mercado: Mercado) => (
                         <div className="mercados" key={mercado.id}>
                             <h2>{mercado.nombre}</h2>
                         </div>

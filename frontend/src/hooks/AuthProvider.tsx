@@ -31,15 +31,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                         const datos = await respuesta.json();
                         if (datos.data) {
                             setPerfil(datos.data);
+                            setUser(user);
                         } else {
                             console.warn("User authenticated in Firebase but not found in backend DB");
                             setPerfil(null);
+                            setUser(null);
                         }
                     }
                 } catch (error) {
                     console.error("Error fetching profile:", error);
                 }
-                setUser(user);
             } else {
                 setPerfil(null);
                 setUser(null);

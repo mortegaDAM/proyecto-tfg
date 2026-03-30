@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthProvider';
 import './Navbar.css';
@@ -7,6 +7,14 @@ const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user } = useAuth();
+    const [valor, setValor] = useState('');
+
+    const handleSearch = (event: React.FormEvent) => {
+        event.preventDefault();
+
+        navigate(`/buscar?search=${encodeURIComponent(valor)}`);
+    }
+
 
     return (
         <nav className="navbar">
@@ -19,11 +27,18 @@ const Navbar: React.FC = () => {
                     <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21 21L15.0001 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <input
-                        type="text"
-                        placeholder="Buscar mercados..."
-                        className="search-input"
-                    />
+                    <form onSubmit={handleSearch}>
+                        <input
+                            type="text"
+                            placeholder="Buscar mercados..."
+                            className="search-input"
+                            onChange={(e) => {
+                                setValor(e.target.value);
+                            }}
+                        />
+                        <button type='submit'>Buscar</button>
+                    </form>
+
                 </div>
             </div>
 
