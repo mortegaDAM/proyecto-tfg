@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { type Mercados } from "../interfaces/interfaces";
+import { type Mercado } from "../interfaces/interfaces";
 import './CrearPuestoView.css';
+import { useAuth } from "../hooks/AuthProvider";
 
 export const CrearPuestoView = () => {
     const navigate = useNavigate();
     const [nombre, setNombre] = useState('');
-    const [mercados, setMercados] = useState<Mercados[]>();
-    const [mercadoSeleccionado, setMercadoSeleccionado] = useState('');
+    const [mercados, setMercados] = useState<Mercado[]>();
+    const [mercadoSeleccionado, setMercadoSeleccionado] = useState(0);
+    const { perfil } = useAuth();
 
     useEffect(() => {
+        // Llamo a todos los mercados para que se muestren en el select
+        // del formulario
         const fetchData = async () => {
             try {
                 const respuesta = await fetch("http://localhost:8080/api/mercados/getAll");
@@ -23,12 +27,32 @@ export const CrearPuestoView = () => {
             }
         }
         fetchData();
-    }, [])
+    }, []);
 
-    const handleOnSubmit = (event: React.FormEvent) => {
+    // Creo el puesto con los datos -> nombre, abierto(default false), usuario y el mercado seleccionado
+    const handleOnSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        console.log("Creando nuevo puesto...", { nombre, mercadoSeleccionado });
-        navigate("/mi-cuenta/puestos");
+
+        try {
+            const respuesta = await fetch("http://localhost:8080/api/puestos/create", {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({ nombre: nombre, abierto: false, usuario: perfil, mercado: { id: mercadoSeleccionado } })
+            });
+
+            if (respuesta.ok) {
+                alert("Puesto creado correctamente");
+                navigate('/mi-cuenta/puestos');
+            } else {
+                const error = await respuesta.json();
+                console.log(error);
+                alert("Se ha rechazado la solicitud. Revisa los datos");
+            }
+        } catch (e) {
+            alert("Error al crear el nuevo puesto");
+        }
     }
 
     return (
@@ -47,15 +71,15 @@ export const CrearPuestoView = () => {
                     <select
                         className="create-puesto-select"
                         value={mercadoSeleccionado}
-                        onChange={event => setMercadoSeleccionado(event.target.value)}
+                        onChange={event => setMercadoSeleccionado(Number(event.target.value))}
                         required
                     >
-                        <option value="" disabled>Selecciona un mercado</option>
+                        <option value="" disabled >Selecciona un mercado</option>
                         {
                             !mercados ? (
                                 <option value="0">Cargando mercados...</option>
                             ) : (
-                                mercados.map((mercado: Mercados) => (
+                                mercados.map((mercado: Mercado) => (
                                     <option key={mercado.id} value={mercado.id}>
                                         {mercado.nombre}
                                     </option>

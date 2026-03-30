@@ -13,6 +13,9 @@ import { HomeView } from "./routes/HomeView";
 import { AuthProvider } from "./hooks/AuthProvider";
 import { PrivateRoute } from "./hooks/PrivateRoute";
 import { CrearPuestoView } from "./routes/CrearPuestoView";
+import { SearchResults } from "./routes/SearchResults";
+import { MercadoView } from "./routes/MercadoView";
+import { ComprobarSesion } from "./hooks/ComprobarSesion";
 
 function App() {
 
@@ -25,6 +28,11 @@ function App() {
               <Route element={<MenuView />}>
                 {/*Ruta Principal*/}
                 <Route index element={<HomeView />} />
+                <Route path="buscar" element={<SearchResults />} />
+                {/*Comprueba si hay sesión, si no la hay, lanza el formulario*/}
+                <Route element={<ComprobarSesion />}>
+                  <Route path="mercado/:id" element={<MercadoView />} />
+                </Route>
                 {/*Necesita SIEMPRE tener user y perfil (useAuth) */}
                 <Route element={<PrivateRoute />}>
                   <Route path='mi-cuenta' element={<MiCuentaView />} />
@@ -42,7 +50,7 @@ function App() {
             </Route>
 
             {/* Rutas no validas */}
-            <Route path='*' element={<PaginaNoExistente />} />
+            {<Route path='*' element={<PaginaNoExistente />} />}
           </Routes>
         </AuthProvider>
       </BrowserRouter >

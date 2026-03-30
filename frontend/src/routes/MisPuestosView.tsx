@@ -26,7 +26,6 @@ export const MisPuestosView = () => {
     const [puestos, setPuestos] = useState<Puesto[]>();
 
     useEffect(() => {
-
         const fetchData = async () => {
             if (!perfil) return;
             const respuesta = await fetch(`http://localhost:8080/api/usuarios/listaPuestos/${perfil?.id}`);
@@ -41,6 +40,15 @@ export const MisPuestosView = () => {
 
     const handleOnClick = () => {
         navigate('/mi-cuenta/puestos/nuevo');
+    }
+
+    const handleOnEdit = () => {
+        // redirigir a la edicion
+    }
+
+    const handleOnDelete = () => {
+        // mostrar un alert o modal que avise de que vas a borrarlo
+        // llamar a la api y borrarlo y que se actualice la lista de puetos
     }
 
     // Usamos los puestos del estado si existen, si no los de mock para visualización
@@ -64,8 +72,8 @@ export const MisPuestosView = () => {
                                 <h2 className="puesto-name">{puesto.nombre}</h2>
 
                                 <div className="puesto-actions">
-                                    <button className="puesto-btn edit">Editar</button>
-                                    <button className="puesto-btn delete">Eliminar</button>
+                                    <button className="puesto-btn edit" onClick={handleOnEdit}>Editar</button>
+                                    <button className="puesto-btn delete" onClick={handleOnDelete}>Eliminar</button>
                                 </div>
                             </div>
                         </div>

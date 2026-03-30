@@ -6,8 +6,6 @@ import Navbar from "../components/Navbar";
 import { useAuth } from "../hooks/AuthProvider";
 import './RegisterView.css';
 
-
-
 export const RegisterView = () => {
     const navigate = useNavigate();
     const { actualizarPerfil } = useAuth();

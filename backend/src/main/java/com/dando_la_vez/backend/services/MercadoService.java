@@ -26,5 +26,7 @@ public class MercadoService {
     public Mercado updateMercado(Mercado mercado){
         return mercadoRepository.save(mercado);
     }
-
+    public List<Mercado> contieneNombre(String nombre){
+        return mercadoRepository.findByNombreContainingIgnoreCase(nombre);
+    }
 }
