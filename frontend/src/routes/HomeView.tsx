@@ -107,25 +107,14 @@ export const HomeView = () => {
             <div className="markets-grid">
                 {MOCK_MARKETS.map((market) => (
                     <div key={market.id} className="market-card" onClick={handleMarketClick}>
-                        <Link to={`mercado/${market.id}`} state={{ nombreMercado: market.name }}>
+                        <Link to={`mercado/${market.id}`} state={{ nombreMercado: market.name }} className="market-link">
                             <div className="card-image-container">
                                 <img src={market.image} alt={market.name} className="card-image" />
                             </div>
 
                             <div className="card-content">
-                                <span className="market-category">{market.category}</span>
                                 <h3 className="market-title">{market.name}</h3>
                                 <p className="market-description">{market.description}</p>
-
-                                <div className="card-footer">
-                                    <div className="rating">
-                                        <span className="star-icon">★</span>
-                                        <span>{market.rating}</span>
-                                    </div>
-                                    <span className={`status-badge ${!market.isOpen ? 'closed' : ''}`}>
-                                        {market.isOpen ? 'Abierto' : 'Cerrado'}
-                                    </span>
-                                </div>
                             </div>
                         </Link>
                     </div>

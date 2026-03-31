@@ -39,6 +39,7 @@ export interface Cliente {
 export interface Puesto {
     id: number,
     nombre: string,
-    listaClientes: Cliente[]
+    listaClientes: Cliente[],
+    abierto?: boolean
 }
 

@@ -86,15 +86,6 @@
     text-align: left;
 }
 
-.market-category {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
 .market-title {
     font-size: 1.25rem;
     font-weight: 700;
@@ -106,45 +97,18 @@
     font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.5;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0;
     flex-grow: 1;
 }
 
-.card-footer {
+.market-link {
+    text-decoration: none;
+    color: inherit;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid #f3f4f6;
+    flex-direction: column;
+    height: 100%;
 }
 
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.star-icon {
-    color: #fbbf24;
-}
-
-.status-badge {
-    padding: 0.25rem 0.75rem;
-    background: #ecfdf5;
-    color: #059669;
-    /* Green for Open */
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border: 1px solid #d1fae5;
-}
-
-.status-badge.closed {
-    background: #fef2f2;
-    color: #dc2626;
-    /* Red for Closed */
-    border-color: #fee2e2;
+.market-link:hover {
+    text-decoration: none;
 }

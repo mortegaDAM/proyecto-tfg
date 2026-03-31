@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import type { Puesto } from "../interfaces/interfaces";
+import "./MercadoView.css";
 
 export const MercadoView = () => {
     // cojo el id como parámetro de la url (ruta)
@@ -40,27 +41,31 @@ export const MercadoView = () => {
     }, []);
 
     return (
-        <>
-            <h1>Mercado {nombre}</h1>
+        <div className="mercado-view-container">
+            <header className="mercado-header">
+                <h1 className="mercado-title">Mercado {nombre}</h1>
+                <p className="mercado-subtitle">Descubre los puestos diponibles y pide tu turno.</p>
+            </header>
 
-            <section>
+            <section className="puestos-grid">
                 {!puestos || puestos.length === 0 ? (
-                    <h2>Error al cargar los puestos o lista vacía</h2>
+                    <div className="empty-state">
+                        <h2>El mercado está vacío</h2>
+                        <p>Aún no hay puestos registrados en este mercado, o han ocurrido problemas al cargarlos.</p>
+                    </div>
                 ) : (
                     puestos.map((puesto: Puesto) => (
-                        <div className="puestos" key={puesto.id}>
-                            <h2>{puesto.nombre}</h2>
-                            {puesto.abierto ? (
-                                <p>Abierto</p>
-                            ) : (
-                                <p>Cerrado</p>
-                            )}
+                        <div className="puesto-card" key={puesto.id}>
+                            <div className="puesto-icon">🏪</div>
+                            <h2 className="puesto-name">{puesto.nombre}</h2>
+                            <span className={`status-badge ${puesto.abierto ? 'open' : 'closed'}`}>
+                                {puesto.abierto ? 'Abierto' : 'Cerrado'}
+                            </span>
                         </div>
                     ))
                 )}
             </section>
-
-        </>
+        </div>
     );
 }
 
