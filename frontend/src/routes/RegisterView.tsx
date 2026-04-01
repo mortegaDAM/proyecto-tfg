@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -8,12 +8,18 @@ import './RegisterView.css';
 
 export const RegisterView = () => {
     const navigate = useNavigate();
-    const { actualizarPerfil } = useAuth();
+    const { actualizarPerfil, user, perfil } = useAuth();
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     // const [username, setUsername] = useState('');
     const [name, setName] = useState('');
+
+    useEffect(() => {
+        if (perfil && user) {
+            navigate('/');
+        }
+    }, [user, perfil]);
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -48,7 +54,7 @@ export const RegisterView = () => {
                 actualizarPerfil(datos.data);
 
                 alert('Usuario Registrado Correctamente');
-                navigate('/');
+                //navigate('/');
 
             } else {
                 alert('No se ha podido registrar el usuario en la base de datos');

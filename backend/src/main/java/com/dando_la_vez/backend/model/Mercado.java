@@ -18,6 +18,8 @@ public class Mercado {
     private int id;
     @Column(name = "nombre")
     private String nombre;
+    @Column(name = "descripcion")
+    private String descripcion;
 
     @OneToMany(mappedBy = "mercado")
     @JsonManagedReference("puesto-mercado")
@@ -26,5 +28,9 @@ public class Mercado {
 
     public Mercado(String nombre) {
         this.nombre = nombre;
+    }
+    public Mercado(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 }

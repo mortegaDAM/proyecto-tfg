@@ -16,7 +16,8 @@ export interface AuthContextInterface {
 
 export interface Mercado {
     id: number,
-    nombre: string
+    nombre: string,
+    descripcion: string
 }
 
 // Interface for Mock Data (Visuals)
@@ -41,5 +42,14 @@ export interface Puesto {
     nombre: string,
     listaClientes: Cliente[],
     abierto?: boolean
+}
+
+export interface Modal {
+    abierto: boolean,
+    titulo: string,
+    mensaje: string,
+    cancelar: () => void, // Funcion que luego se le pasa otra funcion
+    aceptar: () => void, // Funcion
+    condicional: boolean
 }
 
