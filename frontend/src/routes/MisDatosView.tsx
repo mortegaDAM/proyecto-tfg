@@ -4,11 +4,18 @@ import React from 'react';
 import './MisDatosView.css';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+import { ModalView } from "../components/Modal";
 
 export const MisDatosView = () => {
     const { user, perfil, actualizarPerfil } = useAuth();
     const [nombre, setNombre] = useState(perfil?.nombre);
     const [estado, setEstado] = useState(false);
+
+    // Datos modal
+    const [abrirModal, setAbrirModal] = useState(false);
+    const [tituloModal, setTituloModal] = useState("");
+    const [mensajeModal, setMensajeModal] = useState("");
+    const [condicionalModal, setCondicionalModal] = useState(false);
 
     //console.log(perfil);
 
@@ -38,7 +45,10 @@ export const MisDatosView = () => {
                 if (respuesta.ok) {
                     const datos = await respuesta.json();
                     actualizarPerfil(datos.data);
-                    alert("Datos actualizados correctamente");
+
+                    // llamada al modal
+                    handleUsuarioActualizado();
+
                     setEstado(false);
                 } else {
                     alert("Error al actualizar los datos en el servidor");
@@ -68,7 +78,21 @@ export const MisDatosView = () => {
         }
     }
 
-    // TODO: modal para "Cancelar"
+    const handleCancelarActualizacion = () => {
+        setAbrirModal(true);
+        setTituloModal("Cancelar");
+        setMensajeModal("¿Estás seguro de querer cancelar la operación?");
+        // opcion de aceptar y cancelar modal
+        setCondicionalModal(true);
+    }
+
+    const handleUsuarioActualizado = () => {
+        setAbrirModal(true);
+        setTituloModal("Usuario actualizado");
+        setMensajeModal("El usuario se ha actualizado correctamente");
+        // solo opcion de cerrar el modal
+        setCondicionalModal(false);
+    }
 
     return (
         <div className="page-wrapper">
@@ -113,13 +137,21 @@ export const MisDatosView = () => {
                                 />*/}
                                 <div className="data-actions">
                                     <button type="submit" className="data-btn primary">Actualizar Datos</button>
-                                    <button type="button" className="data-btn secondary" onClick={() => setEstado(false)}>Cancelar</button>
+                                    <button type="button" className="data-btn secondary" onClick={handleCancelarActualizacion}>Cancelar</button>
                                 </div>
                             </form>
                         </div>
                     )}
                 </div>
             </div>
+
+            <ModalView
+                abierto={abrirModal}
+                titulo={tituloModal}
+                mensaje={mensajeModal}
+                cancelar={() => setAbrirModal(false)}
+                aceptar={() => { setAbrirModal(false); setEstado(false); }}
+                condicional={condicionalModal} />
         </div>
     );
 }
