@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider"
 import { useEffect, useState } from "react";
-import "./ComprobarSesion.css";
+import "../styles/hooks/ComprobarSesion.css";
+import { useNotification } from "./NotificationContext";
 
 export const ComprobarSesion = () => {
     const { user } = useAuth();
+    const { showNotification } = useNotification();
     const [sesion, setSesion] = useState(localStorage.getItem('cliente_dando_la_vez'));
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -43,7 +45,7 @@ export const ComprobarSesion = () => {
             }
 
         } catch (error) {
-            alert("error al añadir el cliente");
+            showNotification("Error", "No se pudo registrar la sesión del cliente.", "error");
         }
     }
 

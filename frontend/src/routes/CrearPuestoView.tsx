@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { type Mercado } from "../interfaces/interfaces";
-import './CrearPuestoView.css';
+import '../styles/routes/CrearPuestoView.css';
 import { useAuth } from "../hooks/AuthProvider";
+import { useNotification } from "../hooks/NotificationContext";
 
 export const CrearPuestoView = () => {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ export const CrearPuestoView = () => {
     const [mercados, setMercados] = useState<Mercado[]>();
     const [mercadoSeleccionado, setMercadoSeleccionado] = useState(0);
     const { perfil } = useAuth();
+    const { showNotification } = useNotification();
 
     useEffect(() => {
         // Llamo a todos los mercados para que se muestren en el select
@@ -43,15 +45,15 @@ export const CrearPuestoView = () => {
             });
 
             if (respuesta.ok) {
-                alert("Puesto creado correctamente");
+                showNotification("Puesto creado", "Tu puesto ha sido registrado correctamente.", "success");
                 navigate('/mi-cuenta/puestos');
             } else {
                 const error = await respuesta.json();
                 console.log(error);
-                alert("Se ha rechazado la solicitud. Revisa los datos");
+                showNotification("Error", "No se pudo crear el puesto. Revisa los datos.", "error");
             }
         } catch (e) {
-            alert("Error al crear el nuevo puesto");
+            showNotification("Error", "Error de conexión al crear el puesto.", "error");
         }
     }
 

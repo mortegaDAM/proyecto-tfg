@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { Puesto } from "../interfaces/interfaces";
-import "./MercadoView.css";
+import "../styles/routes/MercadoView.css";
+import { useNotification } from "../hooks/NotificationContext";
 
 export const MercadoView = () => {
     // cojo el id como parámetro de la url (ruta)
     const { id } = useParams();
-    const sesion = localStorage.getItem('cliente_dando_la_vez');
     const [puestos, setPuestos] = useState<Puesto[]>();
     const navigate = useNavigate();
+    const { showNotification } = useNotification();
     const location = useLocation();
 
     // Paso el nombre del mercado por el state 
@@ -28,7 +29,7 @@ export const MercadoView = () => {
                     console.log("Puestos: " + puestos);
                 }
             } catch (e) {
-                alert("Error al sacar los puestos");
+                showNotification("Error", "No se pudieron cargar los puestos del mercado.", "error");
                 navigate('/');
             }
         }

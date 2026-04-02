@@ -1,79 +1,15 @@
 
 import { useEffect, useState } from "react";
-import type { Mercado, MarketMock } from "../interfaces/interfaces";
-import { Link, useOutletContext } from "react-router-dom";
-import { MercadoView } from "./MercadoView";
+import type { Mercado } from "../interfaces/interfaces";
+import { Link } from "react-router-dom";
 
-
-
-const MOCK_MARKETS: MarketMock[] = [
-    {
-        id: 1,
-        name: "Mercado de San Miguel",
-        category: "Gastronomía",
-        description: "Histórico mercado con puestos de comida gourmet y tapas variadas en un ambiente animado.",
-        image: "https://placehold.co/600x400/e67e22/ffffff?text=San+Miguel",
-        rating: 4.8,
-        isOpen: true
-    },
-    {
-        id: 2,
-        name: "Mercado de la Paz",
-        category: "Alimentación",
-        description: "Mercado tradicional de barrio con productos frescos de alta calidad y trato cercano.",
-        image: "https://placehold.co/600x400/27ae60/ffffff?text=Mercado+Paz",
-        rating: 4.6,
-        isOpen: true
-    },
-    {
-        id: 3,
-        name: "Mercado de Maravillas",
-        category: "Variedad",
-        description: "El mercado municipal más grande de Europa, con cientos de puestos de todo tipo.",
-        image: "https://placehold.co/600x400/2980b9/ffffff?text=Maravillas",
-        rating: 4.5,
-        isOpen: false
-    },
-    {
-        id: 4,
-        name: "Mercado de Motores",
-        category: "Vintage",
-        description: "Mercadillo mensual de artesanía, diseño, vintage y comida en un museo de ferrocarril.",
-        image: "https://placehold.co/600x400/8e44ad/ffffff?text=Motores",
-        rating: 4.7,
-        isOpen: false
-    },
-    {
-        id: 5,
-        name: "Mercado de Antón Martín",
-        category: "Gastronomía",
-        description: "Fusión de mercado tradicional con propuestas gastronómicas modernas e internacionales.",
-        image: "https://placehold.co/600x400/c0392b/ffffff?text=Anton+Martin",
-        rating: 4.4,
-        isOpen: true
-    },
-    {
-        id: 6,
-        name: "Mercado de Vallehermoso",
-        category: "Ecológico",
-        description: "Mercado de abastos con una fuerte apuesta por el producto de proximidad y ecológico.",
-        image: "https://placehold.co/600x400/16a085/ffffff?text=Vallehermoso",
-        rating: 4.9,
-        isOpen: true
-    }
-];
+// Colores para generar imágenes placeholder dinámicas por mercado
+const PLACEHOLDER_COLORS = ["e67e22", "27ae60", "2980b9", "8e44ad", "c0392b", "16a085", "d35400", "2c3e50"];
 
 export const HomeView = () => {
-    // Logic from backend (preserved as requested)
-    const [mercados, setMercados] = useState<Mercado[]>();
-
-    // Access context from MenuView Layout if needed (e.g. for opening login modal)
-    // const { setIsLoginModalOpen } = useOutletContext<any>(); 
-    // For now we can use a local state or just console log click
-    const handleMarketClick = () => {
-        console.log("Market clicked - Logic to open details or Login Modal");
-        // setIsLoginModalOpen(true); 
-    };
+    const [mercados, setMercados] = useState<Mercado[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const getMercados = async () => {
@@ -82,15 +18,22 @@ export const HomeView = () => {
                 if (respuesta.ok) {
                     const datos = await respuesta.json();
                     setMercados(datos.data);
-                    console.log("Mercados fetched:", datos.data);
                 }
             } catch (e) {
                 console.error("Error fetching markets", e);
+                setError(true);
+            } finally {
+                setLoading(false);
             }
         }
         getMercados();
     }, []);
 
+    const getPlaceholderImage = (nombre: string, index: number) => {
+        const color = PLACEHOLDER_COLORS[index % PLACEHOLDER_COLORS.length];
+        const text = encodeURIComponent(nombre);
+        return `https://placehold.co/600x400/${color}/ffffff?text=${text}`;
+    };
 
     return (
         <>
@@ -99,42 +42,44 @@ export const HomeView = () => {
                 <p className="section-subtitle">Explora los mejores puestos y productos cerca de ti. Si quieres añadir un puesto a algún mercado, no dudes en registrarte.</p>
             </header>
 
-            {/* 
-                Visual Update: Using MOCK_MARKETS to show the design. 
-                Existing 'mercados' state is fetched but not currently used for display 
-                because the backend data structure is incomplete/empty.
-            */}
-            <div className="markets-grid">
-                {MOCK_MARKETS.map((market) => (
-                    <div key={market.id} className="market-card" onClick={handleMarketClick}>
-                        <Link to={`mercado/${market.id}`} state={{ nombreMercado: market.name }} className="market-link">
-                            <div className="card-image-container">
-                                <img src={market.image} alt={market.name} className="card-image" />
-                            </div>
-
+            {loading ? (
+                <div className="markets-grid">
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="market-card" style={{ opacity: 0.5, animation: "pulse 1.5s ease-in-out infinite" }}>
+                            <div className="card-image-container" style={{ background: "var(--surface-secondary, #e0e0e0)" }}></div>
                             <div className="card-content">
-                                <h3 className="market-title">{market.name}</h3>
-                                <p className="market-description">{market.description}</p>
+                                <h3 className="market-title" style={{ background: "var(--surface-secondary, #e0e0e0)", color: "transparent", borderRadius: "4px" }}>Cargando...</h3>
+                                <p className="market-description" style={{ background: "var(--surface-secondary, #e0e0e0)", color: "transparent", borderRadius: "4px" }}>Cargando descripción del mercado...</p>
                             </div>
-                        </Link>
-                    </div>
-                ))}
-            </div>
-
-            {/* 
-            <h1>Los Últimos Mercados (Backend Data)</h1>
-            <section>
-                {!mercados ? (
-                    <h2>Error al cargar los mercados o lista vacía</h2>
-                ) : (
-                    mercados.map((mercado: Mercado) => (
-                        <div className="mercados" key={mercado.id}>
-                            <h2>{mercado.nombre}</h2>
                         </div>
-                    ))
-                )}
-            </section>
-            */}
+                    ))}
+                </div>
+            ) : error ? (
+                <div className="section-header">
+                    <p className="section-subtitle">No se pudieron cargar los mercados. Asegúrate de que el servidor esté en funcionamiento.</p>
+                </div>
+            ) : mercados.length === 0 ? (
+                <div className="section-header">
+                    <p className="section-subtitle">No hay mercados disponibles en este momento.</p>
+                </div>
+            ) : (
+                <div className="markets-grid">
+                    {mercados.map((mercado, index) => (
+                        <div key={mercado.id} className="market-card">
+                            <Link to={`mercado/${mercado.id}`} state={{ nombreMercado: mercado.nombre }} className="market-link">
+                                <div className="card-image-container">
+                                    <img src={getPlaceholderImage(mercado.nombre, index)} alt={mercado.nombre} className="card-image" />
+                                </div>
+
+                                <div className="card-content">
+                                    <h3 className="market-title">{mercado.nombre}</h3>
+                                    <p className="market-description">{mercado.descripcion}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+            )}
         </>
     );
 }

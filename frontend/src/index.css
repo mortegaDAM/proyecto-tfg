@@ -7,19 +7,19 @@
   --secondary-color: #495c95;
   --secondary-container: #acbfff;
   
-  --background-color: #f8f9ff;
-  --surface-color: #ffffff;
+  --background-color: #ffffff;
+  --surface-color: #f3f5f7;
   
-  /* Tonal Layering Surfaces */
-  --surface-container-lowest: #ffffff;
-  --surface-container-low: #eff4ff;
-  --surface-container: #e6eeff;
-  --surface-container-high: #dee9fc;
-  --surface-container-highest: #d9e3f6;
+  /* Tonal Layering Surfaces - Refined Light Gray */
+  --surface-container-lowest: #f3f5f7;
+  --surface-container-low: #e9ecef;
+  --surface-container: #dee2e6;
+  --surface-container-high: #ced4da;
+  --surface-container-highest: #adb5bd;
 
   --text-primary: #121c2a;
   --text-secondary: #434655;
-  --border-color: #c3c6d726; /* Subtle ghost border (15% opacity) */
+  --border-color: rgba(0, 0, 0, 0.08); /* More visible but still subtle border */
   
   --danger-color: #dc2626;
   --danger-bg: #fef2f2;

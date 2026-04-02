@@ -13,7 +13,7 @@
     padding: 3.5rem;
     width: 100%;
     max-width: 480px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08); /* Deeper shadow */
     border: 1px solid var(--border-color);
     text-align: center;
     animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);

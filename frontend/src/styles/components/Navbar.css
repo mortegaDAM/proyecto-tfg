@@ -16,6 +16,55 @@
 .navbar-brand {
     display: flex;
     align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+}
+
+/* ── Monograma DLV ── */
+.navbar-logo {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.logo-letter {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1;
+    background: var(--primary-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Abril Fatface', Georgia, serif;
+    letter-spacing: -0.05em;
+    user-select: none;
+}
+
+.logo-d {
+    transform: translate(-6px, -4px) rotate(-10deg);
+    font-size: 2rem;
+    opacity: 1;
+    z-index: 3;
+}
+
+.logo-l {
+    transform: translate(3px, 4px) rotate(6deg);
+    font-size: 1.8rem;
+    opacity: 0.88;
+    z-index: 2;
+}
+
+.logo-v {
+    transform: translate(8px, -3px) rotate(-5deg);
+    font-size: 1.9rem;
+    opacity: 0.7;
+    z-index: 1;
 }
 
 .navbar-title {

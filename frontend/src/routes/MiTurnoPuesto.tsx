@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
-import "./MiTurnoPuesto.css";
+import "../styles/routes/MiTurnoPuesto.css";
 
 interface Cliente {
   id: number;

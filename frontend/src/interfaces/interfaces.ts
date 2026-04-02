@@ -48,8 +48,14 @@ export interface Modal {
     abierto: boolean,
     titulo: string,
     mensaje: string,
-    cancelar: () => void, // Funcion que luego se le pasa otra funcion
-    aceptar: () => void, // Funcion
-    condicional: boolean
+    cancelar: () => void,
+    aceptar: () => void,
+    condicional: boolean,
+    tipo?: 'success' | 'error' | 'info'
+}
+
+export interface NotificationContextInterface {
+    showNotification: (titulo: string, mensaje: string, tipo?: 'success' | 'error' | 'info', persistente?: boolean) => void;
+    hideNotification: () => void;
 }
 

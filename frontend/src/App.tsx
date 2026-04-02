@@ -11,6 +11,7 @@ import Login from "./routes/LoginView";
 import { PaginaNoExistente } from "./routes/PaginaNoExistente";
 import { HomeView } from "./routes/HomeView";
 import { AuthProvider } from "./hooks/AuthProvider";
+import { NotificationProvider } from "./hooks/NotificationContext";
 import { PrivateRoute } from "./hooks/PrivateRoute";
 import { CrearPuestoView } from "./routes/CrearPuestoView";
 import { SearchResults } from "./routes/SearchResults";
@@ -23,35 +24,37 @@ function App() {
     <>
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route element={<AuthStatus />}>
-              <Route element={<MenuView />}>
-                {/*Ruta Principal*/}
-                <Route index element={<HomeView />} />
-                <Route path="buscar" element={<SearchResults />} />
-                {/*Comprueba si hay sesión, si no la hay, lanza el formulario*/}
-                <Route element={<ComprobarSesion />}>
-                  <Route path="mercado/:id" element={<MercadoView />} />
-                </Route>
-                {/*Necesita SIEMPRE tener user y perfil (useAuth) */}
-                <Route element={<PrivateRoute />}>
-                  <Route path='mi-cuenta' element={<MiCuentaView />} />
-                  <Route path='mi-cuenta/puestos' element={<MisPuestosView />} />
-                  <Route path='mi-cuenta/puestos/nuevo' element={<CrearPuestoView />} />
-                  <Route path='mi-cuenta/datos' element={<MisDatosView />} />
+          <NotificationProvider>
+            <Routes>
+              <Route element={<AuthStatus />}>
+                <Route element={<MenuView />}>
+                  {/*Ruta Principal*/}
+                  <Route index element={<HomeView />} />
+                  <Route path="buscar" element={<SearchResults />} />
+                  {/*Comprueba si hay sesión, si no la hay, lanza el formulario*/}
+                  <Route element={<ComprobarSesion />}>
+                    <Route path="mercado/:id" element={<MercadoView />} />
+                  </Route>
+                  {/*Necesita SIEMPRE tener user y perfil (useAuth) */}
+                  <Route element={<PrivateRoute />}>
+                    <Route path='mi-cuenta' element={<MiCuentaView />} />
+                    <Route path='mi-cuenta/puestos' element={<MisPuestosView />} />
+                    <Route path='mi-cuenta/puestos/nuevo' element={<CrearPuestoView />} />
+                    <Route path='mi-cuenta/datos' element={<MisDatosView />} />
+                  </Route>
                 </Route>
               </Route>
-            </Route>
 
 
-            <Route element={<AuthLayout />}>
-              <Route path='login' element={<Login />} />
-              <Route path='registro' element={<RegisterView />} />
-            </Route>
+              <Route element={<AuthLayout />}>
+                <Route path='login' element={<Login />} />
+                <Route path='registro' element={<RegisterView />} />
+              </Route>
 
-            {/* Rutas no validas */}
-            {<Route path='*' element={<PaginaNoExistente />} />}
-          </Routes>
+              {/* Rutas no validas */}
+              {<Route path='*' element={<PaginaNoExistente />} />}
+            </Routes>
+          </NotificationProvider>
         </AuthProvider>
       </BrowserRouter >
     </>

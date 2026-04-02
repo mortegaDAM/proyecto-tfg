@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
 import Navbar from '../components/Navbar';
 import LoginModal from "../components/LoginModal";
-import './MenuView.css';
+import '../styles/routes/MenuView.css';
 
 export const MenuView = () => {
     const { user } = useAuth(); // If we need to check auth logic later

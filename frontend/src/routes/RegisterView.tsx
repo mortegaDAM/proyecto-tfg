@@ -4,11 +4,13 @@ import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../hooks/AuthProvider";
-import './RegisterView.css';
+import { useNotification } from "../hooks/NotificationContext";
+import '../styles/routes/RegisterView.css';
 
 export const RegisterView = () => {
     const navigate = useNavigate();
     const { actualizarPerfil, user, perfil } = useAuth();
+    const { showNotification } = useNotification();
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
@@ -53,16 +55,16 @@ export const RegisterView = () => {
                 // Actualizamos el estado global para evitar la carrera entre Firebase y DB
                 actualizarPerfil(datos.data);
 
-                alert('Usuario Registrado Correctamente');
+                showNotification("¡Bienvenido!", "Usuario registrado correctamente.", "success");
                 //navigate('/');
 
             } else {
-                alert('No se ha podido registrar el usuario en la base de datos');
+                showNotification("Error de registro", "No se ha podido vincular la cuenta en la base de datos.", "error");
             }
 
 
         } catch (error) {
-            alert("Error en el registro: " + error);
+            showNotification("Error", "Error en el registro: " + error, "error");
             console.error("Registro Error: ", error);
         }
     }

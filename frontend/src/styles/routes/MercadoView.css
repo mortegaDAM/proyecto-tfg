@@ -30,10 +30,10 @@
 }
 
 .puesto-card {
-    background: var(--surface-color);
+    background: var(--surface-container-lowest);
     border-radius: var(--radius-lg);
     padding: 2.5rem 1.5rem;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More visible shadow */
     border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;

@@ -39,13 +39,23 @@
     padding-bottom: 4rem;
 }
 
+.profile-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
 .market-card {
     background: var(--surface-container-lowest);
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--border-color);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Stronger shadow for better separation */
     display: flex;
     flex-direction: column;
     height: 100%;

@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
 import React from 'react';
-import './MisDatosView.css';
+import '../styles/routes/MisDatosView.css';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { ModalView } from "../components/Modal";
+import { useNotification } from "../hooks/NotificationContext";
 
 export const MisDatosView = () => {
     const { user, perfil, actualizarPerfil } = useAuth();
     const [nombre, setNombre] = useState(perfil?.nombre);
     const [estado, setEstado] = useState(false);
+    const { showNotification } = useNotification();
 
     // Datos modal
     const [abrirModal, setAbrirModal] = useState(false);
@@ -23,7 +25,7 @@ export const MisDatosView = () => {
         event.preventDefault();
 
         if (!nombre || nombre.trim() === "") {
-            alert("El nombre no puede estar vacío");
+            showNotification("Campo requerido", "El nombre no puede estar vacío.", "error");
             return;
         }
 
@@ -51,11 +53,11 @@ export const MisDatosView = () => {
 
                     setEstado(false);
                 } else {
-                    alert("Error al actualizar los datos en el servidor");
+                    showNotification("Error", "Error al actualizar los datos en el servidor.", "error");
                 }
             } catch (error) {
                 console.error("Error updating user:", error);
-                alert("Error de conexión al actualizar datos");
+                showNotification("Error de conexión", "No se pudieron actualizar los datos.", "error");
             }
         }
     }
@@ -67,14 +69,14 @@ export const MisDatosView = () => {
         if (perfil?.email) {
             sendPasswordResetEmail(auth, perfil.email)
                 .then(() => {
-                    alert("Se ha enviado un correo a " + perfil.email + " para restablecer tu contraseña.");
+                    showNotification("Email enviado", "Se ha enviado un correo a " + perfil.email + " para restablecer tu contraseña.", "success");
                 })
                 .catch(err => {
                     console.error("Error al enviar email de restablecimiento:", err);
-                    alert("No se pudo enviar el correo de restablecimiento. Inténtalo de nuevo más tarde.");
+                    showNotification("Error", "No se pudo enviar el correo de restablecimiento.", "error");
                 });
         } else {
-            alert("No se encontró un email asociado a tu cuenta.");
+            showNotification("Sin email", "No se encontró un email asociado a tu cuenta.", "error");
         }
     }
 
@@ -87,11 +89,7 @@ export const MisDatosView = () => {
     }
 
     const handleUsuarioActualizado = () => {
-        setAbrirModal(true);
-        setTituloModal("Usuario actualizado");
-        setMensajeModal("El usuario se ha actualizado correctamente");
-        // solo opcion de cerrar el modal
-        setCondicionalModal(false);
+        showNotification("Usuario actualizado", "Tus datos se han guardado correctamente.", "success");
     }
 
     return (

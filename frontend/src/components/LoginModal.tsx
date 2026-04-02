@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase";
-import './LoginModal.css';
+import { useNotification } from "../hooks/NotificationContext";
+import '../styles/components/LoginModal.css';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -14,6 +15,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [pwd, setPwd] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
+    const { showNotification } = useNotification();
 
     if (!isOpen) return null;
 
@@ -30,7 +32,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             navigate('/mi-cuenta'); // Optional: redirect to dashboard or keep on page
         } catch (error) {
             console.error("No iniciado sesion " + error);
-            alert("Email o Contraseña INCORRECTOS");
+            showNotification("Error de acceso", "Email o contraseña incorrectos. Reinténtalo.", "error");
         }
     }
 
