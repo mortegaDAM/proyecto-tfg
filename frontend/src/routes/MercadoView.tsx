@@ -15,10 +15,8 @@ export const MercadoView = () => {
     // Paso el nombre del mercado por el state 
     // para no tener que hacer una llamada a la API para un único valor
     const nombre = location.state?.nombreMercado || null;
-    // TODO: sacar la lista de mercados gracias al id
 
     useEffect(() => {
-
         const fetchData = async () => {
             try {
                 console.log("dentro");

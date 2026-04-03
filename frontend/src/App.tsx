@@ -17,6 +17,7 @@ import { CrearPuestoView } from "./routes/CrearPuestoView";
 import { SearchResults } from "./routes/SearchResults";
 import { MercadoView } from "./routes/MercadoView";
 import { ComprobarSesion } from "./hooks/ComprobarSesion";
+import { PuestoView } from "./routes/PuestoView";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
                   {/*Comprueba si hay sesión, si no la hay, lanza el formulario*/}
                   <Route element={<ComprobarSesion />}>
                     <Route path="mercado/:id" element={<MercadoView />} />
+                    <Route path="puesto/:id" element={<PuestoView />} />
                   </Route>
                   {/*Necesita SIEMPRE tener user y perfil (useAuth) */}
                   <Route element={<PrivateRoute />}>

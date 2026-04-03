@@ -1,32 +1,64 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/hooks/ComprobarSesion.css";
 import { useNotification } from "./NotificationContext";
 
 export const ComprobarSesion = () => {
-    const { user } = useAuth();
+    const { user, perfil } = useAuth();
     const { showNotification } = useNotification();
-    const [sesion, setSesion] = useState(localStorage.getItem('cliente_dando_la_vez'));
-    const [nombre, setNombre] = useState('');
-    const [email, setEmail] = useState('');
+    const [session, setSession] = useState(localStorage.getItem('cliente_dando_la_vez'));
+    const [nombreCliente, setNombreCliente] = useState('');
+    const [emailCliente, setEmailCliente] = useState('');
+    // comprueba que el usuario ya está en la tabla cliente
+    const [usuarioCliente, setUsuarioCliente] = useState(false);
+    const navigate = useNavigate();
     const now = new Date().getTime();
+    const expira = now + (16 * 60 * 60 * 1000); // 16h en milisegundos
 
-    console.log(sesion);
+    const peticionRealizada = useRef(false);
 
     useEffect(() => {
-        if (sesion) {
-            const { expira } = JSON.parse(sesion);
+        if (session) {
+            const { expira } = JSON.parse(session);
             if (expira < now) {
                 localStorage.removeItem('cliente_dando_la_vez');
-                setSesion(null);
+                setSession(null);
             }
         }
-    }, []);
 
-    const handleSesion = async (e: React.FormEvent) => {
+        const registrarCliente = async () => {
+            if (user && perfil && !peticionRealizada.current) {
+                peticionRealizada.current = true;
+                try {
+                    const respuesta = await fetch("http://localhost:8080/api/clientes/create", {
+                        method: 'POST',
+                        headers: {
+                            "Content-type": "application/json"
+                        },
+                        body: JSON.stringify({ nombre: perfil!.nombre, email: perfil!.email, uid: perfil!.uid })
+                    });
+
+                    if (!respuesta.ok) {
+                        showNotification("Error", "Error al entrar en el mercado.", "error");
+                        navigate('/');
+                    } else {
+                        console.log("Usuario cliente realizado");
+                        setUsuarioCliente(true);
+                    }
+                } catch (e) {
+                    showNotification("Error", "Error conectando con el servidor.", "error");
+                }
+            }
+        }
+
+        registrarCliente();
+
+    }, [user, perfil]);
+
+
+    const handleSession = async (e: React.FormEvent) => {
         e.preventDefault();
-        const expira = now + (16 * 60 * 60 * 1000); // 16h en milisegundos
 
         try {
             const respuesta = await fetch("http://localhost:8080/api/clientes/create", {
@@ -34,14 +66,16 @@ export const ComprobarSesion = () => {
                 headers: {
                     "Content-type": "application/json"
                 },
-                body: JSON.stringify({ nombre, email })
+                body: JSON.stringify({ nombre: nombreCliente, email: emailCliente })
             });
 
             if (respuesta.ok) {
                 const datos = await respuesta.json();
                 // guardo en la sesion el id, nombre, email y cuando caduca la sesion
                 localStorage.setItem('cliente_dando_la_vez', JSON.stringify({ id: datos.data.id, nombre: datos.data.nombre, email: datos.data.email, expira }));
-                setSesion(localStorage.getItem('cliente_dando_la_vez'));
+                setSession(localStorage.getItem('cliente_dando_la_vez'));
+            } else {
+                showNotification("Error", "No se pudo registrar la sesión del cliente.", "error");
             }
 
         } catch (error) {
@@ -49,7 +83,7 @@ export const ComprobarSesion = () => {
         }
     }
 
-    if (user || sesion) {
+    if (session || usuarioCliente) {
         return <Outlet />;
     }
 
@@ -58,14 +92,14 @@ export const ComprobarSesion = () => {
             <div className="session-card">
                 <h1 className="session-title">Acceder al Mercado</h1>
                 <p className="session-subtitle">Por favor, indícanos tu nombre y correo para continuar al mercado.</p>
-                <form className="session-form" onSubmit={handleSesion}>
+                <form className="session-form" onSubmit={handleSession}>
                     <div className="form-group">
                         <label htmlFor="nombreCliente">Nombre*</label>
-                        <input className="form-input" placeholder="Tu nombre" type="text" name="nombreCliente" id="nombreCliente" required onChange={event => setNombre(event.target.value)} />
+                        <input className="form-input" placeholder="Tu nombre" type="text" name="nombreCliente" id="nombreCliente" required onChange={event => setNombreCliente(event.target.value)} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="emailCliente">Correo Electrónico*</label>
-                        <input className="form-input" placeholder="tu@email.com" type="email" name="emailCliente" id="emailCliente" required onChange={event => setEmail(event.target.value)} />
+                        <input className="form-input" placeholder="tu@email.com" type="email" name="emailCliente" id="emailCliente" required onChange={event => setEmailCliente(event.target.value)} />
                     </div>
                     <button className="btn-submit" type="submit">Acceder</button>
                 </form>

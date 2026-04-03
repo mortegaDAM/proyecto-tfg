@@ -25,6 +25,8 @@ public class Cliente {
     private String nombre;
     @Column
     private String email;
+    @Column
+    private String uid;
 
     @JsonIgnore
 //    @JsonBackReference("cliente-turno-puesto")
@@ -37,6 +39,12 @@ public class Cliente {
     public Cliente(String email, String nombre) {
         this.email = email;
         this.nombre = nombre;
+    }
+
+    public Cliente(String email, String nombre, String uid) {
+        this.email = email;
+        this.nombre = nombre;
+        this.uid = uid;
     }
 
     public void addPuestos(Puesto puesto){
