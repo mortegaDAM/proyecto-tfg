@@ -72,8 +72,8 @@ public class UsuarioController {
     public ResponseEntity<?> findByUid(@PathVariable String uid){
         Map<String, Object> response = new HashMap<>();
         try{
-            Usuario usuario = usuarioService.getUsuarioUid(uid);
-            if(usuario == null){
+            Optional<Usuario> usuario = usuarioService.getUsuarioUid(uid);
+            if(usuario.isEmpty()){
                 response.put("code",1);
                 response.put("message", "Usuario no encontrado");
                 response.put("total", 0);
