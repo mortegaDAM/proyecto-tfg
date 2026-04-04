@@ -1,24 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import Navbar from "../components/Navbar";
-import './LoginView.css';
+import '../styles/routes/LoginView.css';
+import { useAuth } from "../hooks/AuthProvider";
+import { useNotification } from "../hooks/NotificationContext";
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const { showNotification } = useNotification();
+
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+
+    }, [user]);
 
     const handleLogIn = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, pwd);
             console.log("Iniciado sesión en Firebase correctamente");
-            navigate('/');
+            //navigate('/');
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
-            alert("Email o Contraseña INCORRECTOS");
+            showNotification("Error de acceso", "Email o contraseña incorrectos. Reinténtalo.", "error");
         }
     }
 

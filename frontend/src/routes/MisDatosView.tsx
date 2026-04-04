@@ -1,16 +1,23 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
 import React from 'react';
-import './MisDatosView.css';
+import '../styles/routes/MisDatosView.css';
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import { useNavigate } from "react-router-dom";
+import { ModalView } from "../components/Modal";
+import { useNotification } from "../hooks/NotificationContext";
 
 export const MisDatosView = () => {
     const { user, perfil, actualizarPerfil } = useAuth();
     const [nombre, setNombre] = useState(perfil?.nombre);
     const [estado, setEstado] = useState(false);
-    const navigate = useNavigate();
+    const { showNotification } = useNotification();
+
+    // Datos modal
+    const [abrirModal, setAbrirModal] = useState(false);
+    const [tituloModal, setTituloModal] = useState("");
+    const [mensajeModal, setMensajeModal] = useState("");
+    const [condicionalModal, setCondicionalModal] = useState(false);
 
     //console.log(perfil);
 
@@ -18,7 +25,7 @@ export const MisDatosView = () => {
         event.preventDefault();
 
         if (!nombre || nombre.trim() === "") {
-            alert("El nombre no puede estar vacío");
+            showNotification("Campo requerido", "El nombre no puede estar vacío.", "error");
             return;
         }
 
@@ -40,14 +47,17 @@ export const MisDatosView = () => {
                 if (respuesta.ok) {
                     const datos = await respuesta.json();
                     actualizarPerfil(datos.data);
-                    alert("Datos actualizados correctamente");
+
+                    // llamada al modal
+                    handleUsuarioActualizado();
+
                     setEstado(false);
                 } else {
-                    alert("Error al actualizar los datos en el servidor");
+                    showNotification("Error", "Error al actualizar los datos en el servidor.", "error");
                 }
             } catch (error) {
                 console.error("Error updating user:", error);
-                alert("Error de conexión al actualizar datos");
+                showNotification("Error de conexión", "No se pudieron actualizar los datos.", "error");
             }
         }
     }
@@ -56,14 +66,31 @@ export const MisDatosView = () => {
     // un email muy feo
     // no controlas si se acaba la sesion
     const handlePassword = () => {
-        // if (perfil) {
-        //     sendPasswordResetEmail(auth, perfil.email)
-        //         .then(() => console.log("Email enviado"))
-        //         .catch(err => console.error(err));
-        // }        
+        if (perfil?.email) {
+            sendPasswordResetEmail(auth, perfil.email)
+                .then(() => {
+                    showNotification("Email enviado", "Se ha enviado un correo a " + perfil.email + " para restablecer tu contraseña.", "success");
+                })
+                .catch(err => {
+                    console.error("Error al enviar email de restablecimiento:", err);
+                    showNotification("Error", "No se pudo enviar el correo de restablecimiento.", "error");
+                });
+        } else {
+            showNotification("Sin email", "No se encontró un email asociado a tu cuenta.", "error");
+        }
     }
 
-    // TODO: modal para "Cancelar"
+    const handleCancelarActualizacion = () => {
+        setAbrirModal(true);
+        setTituloModal("Cancelar");
+        setMensajeModal("¿Estás seguro de querer cancelar la operación?");
+        // opcion de aceptar y cancelar modal
+        setCondicionalModal(true);
+    }
+
+    const handleUsuarioActualizado = () => {
+        showNotification("Usuario actualizado", "Tus datos se han guardado correctamente.", "success");
+    }
 
     return (
         <div className="page-wrapper">
@@ -81,7 +108,7 @@ export const MisDatosView = () => {
                             <div className="data-actions">
                                 <button className="data-btn primary" onClick={() => setEstado(true)}>Editar Datos</button>
                             </div>
-                            <button onClick={handlePassword}>Actualizar Contraseña</button>
+                            <button className="data-btn secondary password-btn" onClick={handlePassword}>Actualizar Contraseña</button>
                         </div>
 
                     ) : (
@@ -108,13 +135,21 @@ export const MisDatosView = () => {
                                 />*/}
                                 <div className="data-actions">
                                     <button type="submit" className="data-btn primary">Actualizar Datos</button>
-                                    <button type="button" className="data-btn secondary" onClick={() => setEstado(false)}>Cancelar</button>
+                                    <button type="button" className="data-btn secondary" onClick={handleCancelarActualizacion}>Cancelar</button>
                                 </div>
                             </form>
                         </div>
                     )}
                 </div>
             </div>
+
+            <ModalView
+                abierto={abrirModal}
+                titulo={tituloModal}
+                mensaje={mensajeModal}
+                cancelar={() => setAbrirModal(false)}
+                aceptar={() => { setAbrirModal(false); setEstado(false); }}
+                condicional={condicionalModal} />
         </div>
     );
 }

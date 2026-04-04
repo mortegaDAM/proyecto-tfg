@@ -5,15 +5,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.dando_la_vez.backend.services.MercadoService;
 import com.dando_la_vez.backend.model.Mercado;
 import java.util.List;
@@ -110,6 +102,24 @@ public class MercadoController {
             }
             return ResponseEntity.ok(response);
 
+        } catch (Exception e) {
+            response.put("code",2);
+            response.put("message", "error de ejecucion");
+            response.put("cause", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<?> nombreMercado(@RequestParam String name){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            List<Mercado> listaResultante = mercadoService.contieneNombre(name);
+            response.put("code",1);
+            response.put("message", "Obtenida la lista de mercados que tengan el nombre: " + name);
+            response.put("size", listaResultante.size());
+            response.put("data", listaResultante);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             response.put("code",2);
             response.put("message", "error de ejecucion");

@@ -33,7 +33,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario getUsuarioUid(String uid){
+    public Optional<Usuario> getUsuarioUid(String uid){
         return usuarioRepository.findByUid(uid);
     }
 

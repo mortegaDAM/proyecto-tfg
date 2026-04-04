@@ -3,28 +3,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
     background-color: var(--background-color);
 }
 
 .create-puesto-card {
-    background: var(--surface-color);
+    background: var(--surface-container-lowest);
     border-radius: var(--radius-lg);
-    padding: 3rem;
+    padding: 3.5rem;
     width: 100%;
-    max-width: 500px;
+    max-width: 540px;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-color);
     text-align: center;
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -32,25 +31,26 @@
 }
 
 .create-puesto-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 2.5rem;
     color: var(--text-primary);
+    letter-spacing: -0.04em;
 }
 
 .create-puesto-form {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
 }
 
 .create-puesto-input,
 .create-puesto-select {
     width: 100%;
-    padding: 0.875rem 1rem;
+    padding: 1rem 1.25rem;
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    background: #fff;
+    border: 1px solid transparent;
+    background: var(--surface-container-low);
     font-size: 1rem;
     color: var(--text-primary);
     transition: all 0.2s ease;
@@ -60,64 +60,62 @@
 .create-puesto-input:focus,
 .create-puesto-select:focus {
     outline: none;
+    background: var(--surface-container-lowest);
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
 }
 
 .create-puesto-actions {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
 .create-puesto-btn {
-    padding: 0.875rem;
+    padding: 1rem;
     border-radius: var(--radius-md);
     border: none;
-    background-color: var(--primary-color);
+    background: var(--primary-gradient);
     color: white;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
 }
 
 .create-puesto-btn:hover {
-    background-color: var(--primary-hover);
+    transform: translateY(-1px);
     box-shadow: var(--shadow-md);
+    filter: brightness(1.05);
 }
 
 .create-puesto-cancel-btn {
-    padding: 0.875rem;
+    padding: 1rem;
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--primary-color);
     background-color: transparent;
-    color: var(--text-secondary);
+    color: var(--primary-color);
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .create-puesto-cancel-btn:hover {
-    background-color: #f3f4f6;
-    color: var(--text-primary);
+    background-color: var(--surface-container-low);
+    color: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
 
 .create-puesto-footer {
-    margin-top: 2rem;
-    font-size: 0.875rem;
+    margin-top: 2.5rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
 }
 
 .create-puesto-footer a {
     color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.create-puesto-footer a:hover {
-    text-decoration: underline;
+    font-weight: 600;
 }

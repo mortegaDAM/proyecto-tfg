@@ -28,6 +28,8 @@ public class ClienteService {
         return clienteRepository.findById(id);
     }
 
+    public Optional<Cliente> getClienteUid(String uid){ return clienteRepository.findByUid(uid);}
+
     public Cliente createCliente(Cliente cliente){
         return clienteRepository.save(cliente);
     }

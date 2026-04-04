@@ -14,12 +14,24 @@ export interface AuthContextInterface {
     actualizarPerfil(perfil: Usuario): void
 }
 
-export interface Mercados {
+export interface Mercado {
     id: number,
-    nombre: string
+    nombre: string,
+    descripcion: string
 }
 
-export interface Clientes {
+// Interface for Mock Data (Visuals)
+export interface MarketMock {
+    id: number;
+    name: string;
+    category: string;
+    description: string;
+    image: string;
+    rating: number;
+    isOpen: boolean;
+}
+
+export interface Cliente {
     id: number,
     email: string,
     nombre: string
@@ -27,7 +39,23 @@ export interface Clientes {
 
 export interface Puesto {
     id: number,
-    abierto: boolean,
     nombre: string,
-    listaClientes: Clientes[]
+    listaClientes: Cliente[],
+    abierto?: boolean
 }
+
+export interface Modal {
+    abierto: boolean,
+    titulo: string,
+    mensaje: string,
+    cancelar: () => void,
+    aceptar: () => void,
+    condicional: boolean,
+    tipo?: 'success' | 'error' | 'info'
+}
+
+export interface NotificationContextInterface {
+    showNotification: (titulo: string, mensaje: string, tipo?: 'success' | 'error' | 'info', persistente?: boolean) => void;
+    hideNotification: () => void;
+}
+

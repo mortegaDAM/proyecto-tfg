@@ -17,11 +17,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            console.log("onAuthStateChanged:", user?.email);
-            if (user) {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            console.log("onAuthStateChanged:", currentUser?.email);
+            if (currentUser) {
+                setUser(currentUser);
                 try {
-                    const respuesta = await fetch(`http://localhost:8080/api/usuarios/findUid/${user.uid}`, {
+                    const respuesta = await fetch(`http://localhost:8080/api/usuarios/findUid/${currentUser.uid}`, {
                         method: "GET",
                         headers: {
                             "Content-type": "application/json"
@@ -39,7 +40,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 } catch (error) {
                     console.error("Error fetching profile:", error);
                 }
-                setUser(user);
             } else {
                 setPerfil(null);
                 setUser(null);

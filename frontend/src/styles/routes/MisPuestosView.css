@@ -1,0 +1,319 @@
+/* ===== Layout ===== */
+.puestos-container {
+    min-height: calc(100vh - 80px);
+    padding: 3rem 2rem 4rem;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+/* ===== Header ===== */
+.puestos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.puestos-header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.puestos-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+}
+
+.puestos-count {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--surface-container-low);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+}
+
+/* ===== Add Button ===== */
+.add-puesto-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: none;
+    background: var(--primary-gradient);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+    white-space: nowrap;
+}
+
+.add-puesto-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    filter: brightness(1.06);
+}
+
+.add-puesto-btn:active {
+    transform: translateY(0);
+}
+
+/* ===== Grid ===== */
+.puestos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* ===== Card ===== */
+.data-card {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08); /* Deeper shadow for main data card */
+    border: 1px solid var(--border-color);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.puesto-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(37, 99, 235, 0.12);
+}
+
+/* Icon */
+.puesto-card-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-container-low);
+    border-radius: var(--radius-md);
+    color: var(--primary-color);
+    transition: all 0.25s ease;
+}
+
+.puesto-card:hover .puesto-card-icon {
+    background: var(--surface-container);
+}
+
+/* Content */
+.puesto-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.puesto-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Status badge */
+.puesto-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    width: fit-content;
+}
+
+.puesto-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.puesto-status--open {
+    color: #16a34a;
+}
+
+.puesto-status--open .puesto-status-dot {
+    background: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+}
+
+.puesto-status--closed {
+    color: var(--text-secondary);
+}
+
+.puesto-status--closed .puesto-status-dot {
+    background: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* Actions */
+.puesto-actions {
+    display: flex;
+    gap: 0.625rem;
+    margin-top: 0.5rem;
+}
+
+.puesto-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+    background: none;
+}
+
+.puesto-btn.edit {
+    color: var(--primary-color);
+    border-color: var(--surface-container-high);
+}
+
+.puesto-btn.edit:hover {
+    background: var(--surface-container-low);
+    border-color: var(--primary-color);
+}
+
+.puesto-btn.delete {
+    color: var(--danger-color);
+    border-color: var(--surface-container-high);
+}
+
+.puesto-btn.delete:hover {
+    background: var(--danger-bg);
+    border-color: var(--danger-color);
+}
+
+/* ===== Empty State ===== */
+.puestos-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem;
+    background: var(--surface-container-lowest);
+    border: 2px dashed var(--surface-container-high);
+    border-radius: var(--radius-lg);
+}
+
+.puestos-empty-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-container-low);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.puestos-empty-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--text-primary);
+}
+
+.puestos-empty-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 380px;
+    margin: 0 0 1.75rem;
+    line-height: 1.5;
+}
+
+/* ===== Skeleton Loading ===== */
+.puesto-card--skeleton {
+    pointer-events: none;
+}
+
+.skeleton-block {
+    background: linear-gradient(110deg, var(--surface-container-low) 30%, var(--surface-container) 50%, var(--surface-container-low) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+    height: 14px;
+    border-radius: 4px;
+    background: linear-gradient(110deg, var(--surface-container-low) 30%, var(--surface-container) 50%, var(--surface-container-low) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-text--title {
+    width: 70%;
+    height: 18px;
+}
+
+.skeleton-text--subtitle {
+    width: 40%;
+    height: 12px;
+}
+
+.skeleton-btn {
+    width: 70px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(110deg, var(--surface-container-low) 30%, var(--surface-container) 50%, var(--surface-container-low) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+    .puestos-container {
+        padding: 2rem 1rem 3rem;
+    }
+
+    .puestos-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .puestos-title {
+        font-size: 1.6rem;
+    }
+
+    .puestos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .puesto-card {
+        padding: 1.25rem;
+    }
+
+    .puestos-empty {
+        padding: 3rem 1.5rem;
+    }
+}
