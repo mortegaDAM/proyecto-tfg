@@ -63,7 +63,7 @@ export const MercadoView = () => {
                                 {puesto.abierto ? 'Abierto' : 'Cerrado'}
                             </span>
                             {puesto.abierto ?
-                                <Link to={`/puesto/${puesto.id}`} state={{ puestoCompleto: puesto }}> Pedir turno</Link> :
+                                <Link to={`/puesto/${puesto.id}`}> Pedir turno</Link> :
                                 <p>No se puede pedir turno</p>
                             }
                         </div>

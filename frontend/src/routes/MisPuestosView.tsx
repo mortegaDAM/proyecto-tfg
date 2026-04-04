@@ -132,7 +132,7 @@ export const MisPuestosView = () => {
                                             </svg>
                                             Eliminar
                                         </button>
-                                        <Link to={`/puesto/${puesto.id}`} state={{ puestoCompleto: puesto }} className="puesto-btn entrar">Entrar</Link>
+                                        <Link to={`/puesto/${puesto.id}`} className="puesto-btn entrar">Entrar</Link>
                                     </div>
                                 </div>
                             </div>

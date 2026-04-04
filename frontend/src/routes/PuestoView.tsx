@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import type { Puesto } from "../interfaces/interfaces";
 import { useAuth } from "../hooks/AuthProvider";
 import { useNotification } from "../hooks/NotificationContext";
