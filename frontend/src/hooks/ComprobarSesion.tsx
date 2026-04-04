@@ -3,6 +3,7 @@ import { useAuth } from "./AuthProvider"
 import { useEffect, useRef, useState } from "react";
 import "../styles/hooks/ComprobarSesion.css";
 import { useNotification } from "./NotificationContext";
+import '../styles/hooks/AuthStatus.css';
 
 export const ComprobarSesion = () => {
     const { user, perfil } = useAuth();
@@ -19,14 +20,6 @@ export const ComprobarSesion = () => {
     const peticionRealizada = useRef(false);
 
     useEffect(() => {
-        if (session) {
-            const { expira } = JSON.parse(session);
-            if (expira < now) {
-                localStorage.removeItem('cliente_dando_la_vez');
-                setSession(null);
-            }
-        }
-
         const registrarCliente = async () => {
             if (user && perfil && !peticionRealizada.current) {
                 peticionRealizada.current = true;
@@ -43,7 +36,6 @@ export const ComprobarSesion = () => {
                         showNotification("Error", "Error al entrar en el mercado.", "error");
                         navigate('/');
                     } else {
-                        console.log("Usuario cliente realizado");
                         setUsuarioCliente(true);
                     }
                 } catch (e) {
@@ -52,7 +44,17 @@ export const ComprobarSesion = () => {
             }
         }
 
-        registrarCliente();
+        if (user && perfil) {
+            registrarCliente();
+        }
+
+        if (session) {
+            const { expira } = JSON.parse(session);
+            if (expira < now) {
+                localStorage.removeItem('cliente_dando_la_vez');
+                setSession(null);
+            }
+        }
 
     }, [user, perfil]);
 
@@ -71,8 +73,8 @@ export const ComprobarSesion = () => {
 
             if (respuesta.ok) {
                 const datos = await respuesta.json();
-                // guardo en la sesion el id, nombre, email y cuando caduca la sesion
-                localStorage.setItem('cliente_dando_la_vez', JSON.stringify({ id: datos.data.id, nombre: datos.data.nombre, email: datos.data.email, expira }));
+                // guardo en la sesion el uid, nombre, email y cuando caduca la sesion
+                localStorage.setItem('cliente_dando_la_vez', JSON.stringify({ uid: datos.data.uid, nombre: datos.data.nombre, email: datos.data.email, expira }));
                 setSession(localStorage.getItem('cliente_dando_la_vez'));
             } else {
                 showNotification("Error", "No se pudo registrar la sesión del cliente.", "error");
@@ -81,6 +83,20 @@ export const ComprobarSesion = () => {
         } catch (error) {
             showNotification("Error", "No se pudo registrar la sesión del cliente.", "error");
         }
+    }
+
+    if (user && !usuarioCliente) {
+        return (
+            <div className="auth-loading">
+                <div className="auth-loading-content">
+                    <div className="auth-spinner">
+                        <div className="auth-spinner-ring" />
+                    </div>
+                    <h2 className="auth-loading-title">Dando La Vez</h2>
+                    <p className="auth-loading-text">Verificando el acceso al mercado...</p>
+                </div>
+            </div>
+        );
     }
 
     if (session || usuarioCliente) {
