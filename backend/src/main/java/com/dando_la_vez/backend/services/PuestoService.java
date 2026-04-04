@@ -1,7 +1,9 @@
 package com.dando_la_vez.backend.services;
 
 import com.dando_la_vez.backend.model.Puesto;
+import com.dando_la_vez.backend.model.Usuario;
 import com.dando_la_vez.backend.repository.PuestoRepository;
+import com.dando_la_vez.backend.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class PuestoService {
     @Autowired
     private PuestoRepository puestoRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public List<Puesto> getAllPuestos(){
         return puestoRepository.findAll();
@@ -52,4 +56,13 @@ public class PuestoService {
         }
     }
 
+    // Comprobar si el uid que se pasa es del dueño
+    public boolean esDueno(String uid, Puesto puesto){
+        int idUsuario = puesto.getUsuario().getId();
+        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+        if(usuario.isPresent()) {
+            return usuario.get().getUid().equals(uid);
+        }
+        return false;
+    }
 }
