@@ -41,7 +41,8 @@ export interface Puesto {
     id: number,
     nombre: string,
     listaClientes: Cliente[],
-    abierto?: boolean
+    abierto?: boolean,
+    numeroActual: number
 }
 
 export interface Modal {

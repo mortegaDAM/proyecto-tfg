@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../styles/routes/MisPuestosView.css';
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/AuthProvider";
@@ -61,6 +61,7 @@ export const MisPuestosView = () => {
                     </button>
                 </div>
 
+                <button onClick={() => navigate(-1)}>Volver atrás...</button>
                 {/* Loading */}
                 {loading ? (
                     <div className="puestos-grid">
@@ -79,7 +80,7 @@ export const MisPuestosView = () => {
                         ))}
                     </div>
 
-                /* Empty */
+                    /* Empty */
                 ) : puestos.length === 0 ? (
                     <div className="puestos-empty">
                         <div className="puestos-empty-icon">
@@ -99,7 +100,7 @@ export const MisPuestosView = () => {
                         </button>
                     </div>
 
-                /* Puestos list */
+                    /* Puestos list */
                 ) : (
                     <div className="puestos-grid">
                         {puestos.map((puesto) => (
@@ -131,6 +132,7 @@ export const MisPuestosView = () => {
                                             </svg>
                                             Eliminar
                                         </button>
+                                        <Link to={`/puesto/${puesto.id}`} className="puesto-btn entrar">Entrar</Link>
                                     </div>
                                 </div>
                             </div>

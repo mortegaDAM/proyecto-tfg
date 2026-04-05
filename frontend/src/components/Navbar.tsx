@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthProvider';
 import '../styles/components/Navbar.css';
+import miLogo from '../assets/logotipo.jpg';
 
 const Navbar: React.FC = () => {
     const navigate = useNavigate();
@@ -19,13 +20,14 @@ const Navbar: React.FC = () => {
     return (
         <nav className="navbar">
             <div className="navbar-brand" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
-            <div className="navbar-logo" aria-label="DLV">
+                {/*<div className="navbar-logo" aria-label="DLV">
                 <span className="logo-letter logo-d">D</span>
                 <span className="logo-letter logo-l">L</span>
                 <span className="logo-letter logo-v">V</span>
             </div>
-            <h1 className="navbar-title">Dando La Vez</h1>
-        </div>
+            <h1 className="navbar-title">Dando La Vez</h1>*/}
+                <img src={miLogo} alt="Logotipo" height={70} />
+            </div>
 
             <div className="navbar-center">
                 <div className="search-container">

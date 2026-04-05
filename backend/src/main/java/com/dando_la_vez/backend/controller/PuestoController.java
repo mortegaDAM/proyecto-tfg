@@ -214,4 +214,39 @@ public class PuestoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    @GetMapping("puesto/propietario/{uid}/{id}")
+    public ResponseEntity<?> esDueno(@PathVariable String uid, @PathVariable int id){
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Optional<Puesto> puestoEncontrado = puestoService.getPuestoId(id);
+            if (puestoEncontrado.isPresent()) {
+                if(puestoService.esDueno(uid,puestoEncontrado.get())){
+                    response.put("code", 1);
+                    response.put("message", "El uid coincide con el dueño del puesto");
+                    response.put("total", 1);
+                    response.put("data", puestoEncontrado.get());
+                    response.put("propietario",true);
+                }else{
+                    response.put("code", 1);
+                    response.put("message", "El uid no coincide con el dueño del puesto");
+                    response.put("total", 1);
+                    response.put("data", puestoEncontrado.get());
+                    response.put("propietario",false);
+                }
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("code", 1);
+                response.put("message", "Puesto no encontrado");
+                response.put("total", 0);
+                response.put("data", null);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (Exception e) {
+            response.put("code", 2);
+            response.put("message", "Error de ejecución al reiniciar el puesto");
+            response.put("cause", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 }
