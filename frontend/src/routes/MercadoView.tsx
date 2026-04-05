@@ -44,8 +44,8 @@ export const MercadoView = () => {
     return (
         <div className="mercado-view-container">
             <header className="mercado-header">
-                <h1 className="mercado-title">Mercado {nombre}</h1>
-                <p className="mercado-subtitle">Descubre los puestos diponibles y pide tu turno.</p>
+                <h1 className="mercado-title">{nombre}</h1>
+                <p className="mercado-subtitle">Descubre los puestos disponibles y pide tu turno.</p>
             </header>
             <button onClick={() => navigate(-1)}>Volver atrás...</button>
             <section className="puestos-grid">
