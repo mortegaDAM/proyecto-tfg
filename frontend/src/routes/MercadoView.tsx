@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import type { Puesto } from "../interfaces/interfaces";
 import "../styles/routes/MercadoView.css";
 import { useNotification } from "../hooks/NotificationContext";
@@ -42,8 +42,8 @@ export const MercadoView = () => {
     return (
         <div className="mercado-view-container">
             <header className="mercado-header">
-                <h1 className="mercado-title">Mercado {nombre}</h1>
-                <p className="mercado-subtitle">Descubre los puestos diponibles y pide tu turno.</p>
+                <h1 className="mercado-title">{nombre}</h1>
+                <p className="mercado-subtitle">Descubre los puestos disponibles y pide tu turno.</p>
             </header>
 
             <section className="puestos-grid">
@@ -60,6 +60,9 @@ export const MercadoView = () => {
                             <span className={`status-badge ${puesto.abierto ? 'open' : 'closed'}`}>
                                 {puesto.abierto ? 'Abierto' : 'Cerrado'}
                             </span>
+                            <Link to={`/miTurnoPuesto/${puesto.id}`} className="pedir-turno-btn">
+                                Pedir Turno
+                            </Link>
                         </div>
                     ))
                 )}

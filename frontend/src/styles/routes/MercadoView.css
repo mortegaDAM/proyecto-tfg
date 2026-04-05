@@ -33,21 +33,43 @@
     background: var(--surface-container-lowest);
     border-radius: var(--radius-lg);
     padding: 2.5rem 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More visible shadow */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
     text-align: center;
+    gap: 1rem;
 }
 
 .puesto-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
     border-color: #d1d5db;
+}
+
+.pedir-turno-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    text-align: center;
+}
+
+.pedir-turno-btn:hover {
+    background: #059669;
+    transform: scale(1.02);
 }
 
 .puesto-icon {
