@@ -93,20 +93,34 @@
     font-weight: 600;
 }
 
-.back-btn {
-    margin-top: 1.5rem;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 2rem 1rem;
+    }
+
+    .login-card {
+        padding: 2.5rem 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Softer for small screens */
+    }
+
+    .login-title {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+    }
 }
 
-.back-btn:hover {
-    color: var(--text-primary);
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1rem 0.75rem;
+    }
+
+    .login-card {
+        padding: 2rem 1rem;
+        border-radius: var(--radius-md);
+    }
+
+    .login-title {
+        font-size: 1.5rem;
+    }
 }

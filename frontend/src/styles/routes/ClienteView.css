@@ -1,0 +1,184 @@
+.cliente-view-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2rem;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.cliente-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.back-link-btn {
+    align-self: flex-start;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0;
+}
+
+.back-link-btn:hover {
+    color: var(--primary-color);
+}
+
+.cliente-puesto-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0.5rem 0;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+}
+
+.puesto-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: var(--surface-container-low);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-open {
+    background-color: var(--success);
+    box-shadow: 0 0 8px var(--success);
+}
+
+.status-closed {
+    background-color: var(--error);
+}
+
+.cliente-main-card {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-xl);
+    padding: 3rem 2rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.current-turn-section {
+    margin-bottom: 2.5rem;
+}
+
+.section-label {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+.current-turn-number {
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.queue-info-section {
+    margin-bottom: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.queue-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.pedir-turno-primary-btn {
+    width: 100%;
+    padding: 1.25rem;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+}
+
+.pedir-turno-primary-btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+    box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3);
+}
+
+.pedir-turno-primary-btn:active {
+    transform: translateY(-1px);
+}
+
+.puesto-closed-msg {
+    padding: 1rem;
+    background: var(--surface-container-low);
+    border-radius: var(--radius-md);
+    color: var(--error);
+    font-weight: 500;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+    .cliente-view-container {
+        margin: 1.5rem auto;
+        padding: 1rem;
+    }
+    
+    .cliente-puesto-name {
+        font-size: 2rem;
+    }
+    
+    .current-turn-number {
+        font-size: 4.5rem;
+    }
+    
+    .cliente-main-card {
+        padding: 2rem 1.5rem;
+    }
+}

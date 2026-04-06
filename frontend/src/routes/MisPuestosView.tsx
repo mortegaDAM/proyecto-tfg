@@ -32,13 +32,28 @@ export const MisPuestosView = () => {
         navigate('/mi-cuenta/puestos/nuevo');
     }
 
-    const handleOnEdit = () => {
-        // redirigir a la edicion
+    const handleOnEdit = (idPuesto: number) => {
+        navigate(`/mi-cuenta/puestos/editar/${idPuesto}`);
     }
 
-    const handleOnDelete = () => {
-        // mostrar un alert o modal que avise de que vas a borrarlo
-        // llamar a la api y borrarlo y que se actualice la lista de puetos
+    const handleOnDelete = async (idPuesto: number, nombre: string) => {
+        const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar el puesto "${nombre}"? Esta acción no se puede deshacer.`);
+        if (confirmar) {
+            try {
+                const respuesta = await fetch(`http://localhost:8080/api/puestos/delete/${idPuesto}`, {
+                    method: 'DELETE'
+                });
+                if (respuesta.ok) {
+                    setPuestos(puestos.filter(p => p.id !== idPuesto));
+                    // Opcional: mostrar notificación de éxito si estuviera disponible el hook aquí
+                } else {
+                    alert("No se pudo eliminar el puesto.");
+                }
+            } catch (e) {
+                console.error("Error al eliminar", e);
+                alert("Error de conexión al eliminar el puesto.");
+            }
+        }
     }
 
     return (
@@ -61,7 +76,7 @@ export const MisPuestosView = () => {
                     </button>
                 </div>
 
-                <button onClick={() => navigate(-1)}>Volver atrás...</button>
+                <button className="back-btn" onClick={() => navigate(-1)}>&larr; Volver atrás</button>
                 {/* Loading */}
                 {loading ? (
                     <div className="puestos-grid">
@@ -118,14 +133,14 @@ export const MisPuestosView = () => {
                                         {puesto.abierto ? 'Abierto' : 'Cerrado'}
                                     </span>
                                     <div className="puesto-actions">
-                                        <button className="puesto-btn edit" onClick={handleOnEdit}>
+                                        <button className="puesto-btn edit" onClick={() => handleOnEdit(puesto.id)}>
                                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                             </svg>
                                             Editar
                                         </button>
-                                        <button className="puesto-btn delete" onClick={handleOnDelete}>
+                                        <button className="puesto-btn delete" onClick={() => handleOnDelete(puesto.id, puesto.nombre)}>
                                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <polyline points="3 6 5 6 21 6" />
                                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />

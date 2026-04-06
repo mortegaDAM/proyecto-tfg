@@ -115,3 +115,56 @@ input, textarea, select {
   display: flex;
   flex-direction: column;
 }
+
+/* Global button styles */
+.back-btn {
+  margin-bottom: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  background-color: var(--surface-container-low);
+  width: fit-content;
+}
+
+.back-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--surface-container);
+  transform: translateX(-2px);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  :root {
+    --radius-lg: 0.5rem; /* Tighter corners for mobile */
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+
+  .page-wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-wrapper {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}

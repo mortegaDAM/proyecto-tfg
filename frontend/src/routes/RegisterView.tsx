@@ -112,7 +112,7 @@ export const RegisterView = () => {
                             Registrarse
                         </button>
                     </form>
-                    <button className="back-btn" onClick={() => navigate('/')}>Volver a inicio</button>
+                    <button className="back-btn" onClick={() => navigate('/')}>&larr; Volver a inicio</button>
 
                 </div>
             </div>

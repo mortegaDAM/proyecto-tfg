@@ -56,42 +56,46 @@ const MiTurnoPuesto: React.FC = () => {
 
   useEffect(() => {
     if (perfil && idPuesto) {
+      setError(null);
       fetchCliente();
       fetchPuesto();
+    } else if (!perfil && !loading) {
+       // Si no hay perfil y ya terminó de cargar el auth, mostrar error
+       setError("No se ha podido cargar la sesión del usuario");
     }
-  }, [perfil, idPuesto, fetchCliente, fetchPuesto]);
+  }, [perfil, idPuesto, fetchCliente, fetchPuesto, loading]);
 
   const pedirTurno = async () => {
     if (!puesto || !cliente) return;
 
-    const updatedPuesto = {
-      ...puesto,
-      listaClientes: [...puesto.listaClientes, cliente]
-    };
-
     try {
-      const response = await fetch(`http://localhost:8080/api/puestos/update/${idPuesto}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(updatedPuesto)
+      const response = await fetch(`http://localhost:8080/api/puestos/unirse/${idPuesto}/${cliente.id}`, {
+        method: "PUT"
       });
 
       if (response.ok) {
-        // Refrescar el puesto
+        // Refrescar el puesto para ver mi posición
         fetchPuesto();
       } else {
-        setError("Error al pedir turno");
+        setError("Error al unirse a la cola. Puede que ya estés en ella.");
       }
     } catch {
-      setError("Error al pedir turno");
+      setError("Error de conexión al pedir turno");
     }
   };
 
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!puesto || !cliente) return <div>No se pudo cargar la información</div>;
+  if (loading && !error) {
+    return (
+        <div className="auth-loading">
+            <div className="auth-spinner"><div className="auth-spinner-ring"></div></div>
+            <p>Cargando información de tu turno...</p>
+        </div>
+    );
+  }
+  
+  if (error) return <div className="error-msg-container"><p>Error: {error}</p><button onClick={() => window.location.reload()}>Reintentar</button></div>;
+  if (!puesto || !cliente) return <div className="error-msg-container"><p>No se pudo cargar la información necesaria.</p></div>;
+
 
   const indiceCliente = puesto.listaClientes.findIndex(c => c.id === cliente.id);
   const numeroTurno = indiceCliente !== -1 ? indiceCliente + 1 : null;
@@ -114,10 +118,10 @@ const MiTurnoPuesto: React.FC = () => {
             </div>
           </div>
           <button
-            className="mi-turno-btn"
+            className="back-btn"
             onClick={() => window.history.back()}
           >
-            Volver al Mercado
+            &larr; Volver al Mercado
           </button>
         </>
       ) : (

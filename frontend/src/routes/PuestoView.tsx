@@ -16,7 +16,7 @@ export const PuestoView = () => {
     const { showNotification } = useNotification();
 
     const [propietario, setPropietario] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true);
 
     // Comprobar que es el dueño del puesto
     useEffect(() => {
@@ -44,14 +44,16 @@ export const PuestoView = () => {
                 }
             } catch (e) {
                 showNotification("Error", "No se pudo comprobar la sesion", "error");
+            } finally {
+                setIsLoading(false);
             }
         }
 
         fetchPropietario();
 
-    }, []);
+    }, [id, user, perfil, session, showNotification]);
 
-    if (user && !propietario) {
+    if (isLoading) {
         return (
             <div className="auth-loading">
                 <div className="auth-loading-content">
@@ -68,7 +70,8 @@ export const PuestoView = () => {
     if (propietario) {
         return <PropietarioView {...puesto!} />
     } else {
-        return <ClienteView />;
+        return <ClienteView puesto={puesto!} />;
     }
+
 
 }

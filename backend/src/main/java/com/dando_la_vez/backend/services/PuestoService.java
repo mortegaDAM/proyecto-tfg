@@ -4,6 +4,8 @@ import com.dando_la_vez.backend.model.Puesto;
 import com.dando_la_vez.backend.model.Usuario;
 import com.dando_la_vez.backend.repository.PuestoRepository;
 import com.dando_la_vez.backend.repository.UsuarioRepository;
+import com.dando_la_vez.backend.repository.ClienteRepository;
+import com.dando_la_vez.backend.model.Cliente;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class PuestoService {
     private PuestoRepository puestoRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     public List<Puesto> getAllPuestos(){
         return puestoRepository.findAll();
@@ -44,11 +48,35 @@ public class PuestoService {
         if (puesto == null) {
             throw new IllegalArgumentException("Puesto cannot be null");
         }
+        
+        // Aumentar el número actual
         long numeroActual = puesto.getNumeroActual();
         puesto.setNumeroActual(numeroActual + 1);
+
+        // Auto-limpieza: Eliminar a la primera persona de la lista de espera (la que acaba de ser llamada)
+        if (puesto.getListaClientes() != null && !puesto.getListaClientes().isEmpty()) {
+            puesto.getListaClientes().remove(0);
+        }
     }
 
-    //Logica para reiniciar puestos con ??
+    //Logica para unir a un cliente a la cola de un puesto
+    public void unirseACola(Puesto puesto, int idCliente) {
+        Optional<Cliente> clienteOpt = clienteRepository.findById(idCliente);
+        if (clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+            
+            // Check for duplicates
+            boolean yaEstaEnCola = puesto.getListaClientes().stream()
+                .anyMatch(c -> c.getId() == idCliente);
+            
+            if (!yaEstaEnCola) {
+                puesto.getListaClientes().add(cliente);
+                puestoRepository.save(puesto);
+            }
+        }
+    }
+
+    //Logica para reiniciar puestos
     public void reiniciarPuestos(Puesto puesto){
         puesto.setNumeroActual(0);
         if(puesto.getListaClientes() != null){

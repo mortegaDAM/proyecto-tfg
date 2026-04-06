@@ -47,7 +47,7 @@ export const MercadoView = () => {
                 <h1 className="mercado-title">{nombre}</h1>
                 <p className="mercado-subtitle">Descubre los puestos disponibles y pide tu turno.</p>
             </header>
-            <button onClick={() => navigate(-1)}>Volver atrás...</button>
+            <button className="back-btn" onClick={() => navigate(-1)}>&larr; Volver atrás</button>
             <section className="puestos-grid">
                 {!puestos || puestos.length === 0 ? (
                     <div className="empty-state">

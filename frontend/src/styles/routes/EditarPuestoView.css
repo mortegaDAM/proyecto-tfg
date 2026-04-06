@@ -1,0 +1,261 @@
+.edit-puesto-container {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 2rem;
+    background-color: var(--background-color);
+}
+
+.edit-puesto-card {
+    background: var(--surface-container-lowest);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    width: 600px; /* Wider for better toggle placement */
+    max-width: 100%;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    text-align: left;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.edit-puesto-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+}
+
+.edit-puesto-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+.edit-puesto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.edit-puesto-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--surface-container-low);
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.edit-puesto-input:focus {
+    outline: none;
+    background: var(--surface-container-lowest);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+/* Toggle Group Styling */
+.toggle-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--surface-container-low);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.toggle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.toggle-label {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.toggle-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Base toggle switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--surface-container-highest);
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    box-shadow: var(--shadow-sm);
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Actions */
+.edit-puesto-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.edit-puesto-btn {
+    flex: 2;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: none;
+    background: var(--primary-gradient);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.edit-puesto-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    filter: brightness(1.1);
+}
+
+.edit-puesto-cancel-btn {
+    flex: 1;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: white;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.edit-puesto-cancel-btn:hover {
+    background: var(--surface-container-low);
+    color: var(--text-primary);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skeleton loader */
+.skeleton .skeleton-title {
+    height: 40px;
+    width: 60%;
+    background: var(--surface-container-low);
+    margin-bottom: 20px;
+    border-radius: var(--radius-sm);
+}
+
+.skeleton .skeleton-input,
+.skeleton .skeleton-toggle,
+.skeleton .skeleton-btn {
+    height: 50px;
+    width: 100%;
+    background: var(--surface-container-low);
+    margin-bottom: 20px;
+    border-radius: var(--radius-sm);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .edit-puesto-container {
+        padding: 2rem 1rem;
+    }
+
+    .edit-puesto-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .edit-puesto-title {
+        font-size: 1.75rem;
+    }
+
+    .toggle-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .switch {
+        align-self: flex-end; /* Move toggle to the right on mobile if stacked */
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-puesto-actions {
+        flex-direction: column;
+    }
+
+    .edit-puesto-btn, .edit-puesto-cancel-btn {
+        width: 100%;
+    }
+}
+

@@ -67,7 +67,7 @@ export default function Login() {
                     <div className="login-footer">
                         <p>¿No tienes cuenta? <Link to="/registro">Regístrate</Link></p>
                     </div>
-                    <button className="back-btn" onClick={() => navigate('/')}>Volver a inicio</button>
+                    <button className="back-btn" onClick={() => navigate('/')}>&larr; Volver a inicio</button>
                 </div>
             </div>
         </div>

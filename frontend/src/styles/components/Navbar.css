@@ -108,6 +108,13 @@
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
 }
 
+.search-input-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+
 .search-icon {
     position: absolute;
     left: 14px;
@@ -205,20 +212,95 @@
 }
 
 /* Auth Profile Icon placeholder style */
-.navbar-profile {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--surface-container-high);
+.navbar-profile-btn {
+    height: 44px;
+    padding: 0 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-container-low);
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.75rem;
     cursor: pointer;
-    color: var(--text-primary);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 600;
-    transition: all 0.2s ease;
+    font-size: 0.9rem;
 }
 
-.navbar-profile:hover {
-    background: var(--surface-container-highest);
+.navbar-profile-btn:hover {
+    background: var(--surface-container-lowest);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
+
+.navbar-profile-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 1rem;
+        height: 70px;
+    }
+
+    .navbar-brand img {
+        height: 50px;
+    }
+
+    .navbar-account-text {
+        display: none; /* Hide 'Mi Cuenta' text on mobile */
+    }
+
+    .navbar-profile-btn {
+        width: 44px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .navbar-center {
+        margin: 0 0.5rem;
+    }
+
+    .search-input-wrapper {
+        display: none; /* Hide input and button on mobile */
+    }
+
+    .search-form {
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        border: none;
+        background: transparent;
+    }
+
+    .search-icon {
+        position: static;
+        transform: none;
+        color: var(--text-primary);
+    }
+
+    .navbar-actions {
+        gap: 0.75rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0 0.75rem;
+    }
+
+    .navbar-center {
+        display: none; /* Completely hide search on very small screens if requested */
+    }
+}

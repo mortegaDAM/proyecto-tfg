@@ -99,7 +99,28 @@ public class PuestoController {
         try {
             Optional<Puesto> puestoEncontrado = puestoService.getPuestoId(id);
             if (puestoEncontrado.isPresent()) {
-                Puesto puestoActualizado = puestoService.updatePuesto(puesto);
+                Puesto editado = puestoEncontrado.get();
+                
+                // Actualizar solo si vienen en el body
+                if (puesto.getNombre() != null) editado.setNombre(puesto.getNombre());
+                
+                // Para booleanos, el valor por defecto de 'isAbierto()' si no viene es 'false'. 
+                // Esto es un poco ambiguo. Pero para este caso, lo tomamos como intencional.
+                editado.setAbierto(puesto.isAbierto());
+
+                // IMPORTANTE: Permitir actualización de lista de clientes (usado por MiTurnoPuesto)
+                if (puesto.getListaClientes() != null) {
+                    editado.setListaClientes(puesto.getListaClientes());
+                }
+
+                // Preservar usuario y mercado original si no se proveen (evita errores 500)
+                if (puesto.getUsuario() != null) editado.setUsuario(puesto.getUsuario());
+                if (puesto.getMercado() != null) editado.setMercado(puesto.getMercado());
+
+                // Actualizar numeroActual si es necesario
+                if (puesto.getNumeroActual() != 0) editado.setNumeroActual(puesto.getNumeroActual());
+                
+                Puesto puestoActualizado = puestoService.updatePuesto(editado);
                 response.put("code", 1);
                 response.put("message", "Puesto actualizado correctamente");
                 response.put("total", 1);
@@ -172,6 +193,32 @@ public class PuestoController {
         } catch (Exception e) {
             response.put("code", 2);
             response.put("message", "error de ejecucion");
+            response.put("cause", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    // Endpoint para unirse a la cola
+    @PutMapping("/unirse/{idPuesto}/{idCliente}")
+    public ResponseEntity<?> unirseACola(@PathVariable int idPuesto, @PathVariable int idCliente) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Optional<Puesto> puestoEncontrado = puestoService.getPuestoId(idPuesto);
+            if (puestoEncontrado.isPresent()) {
+                puestoService.unirseACola(puestoEncontrado.get(), idCliente);
+                response.put("code", 1);
+                response.put("message", "Cliente unido a la cola correctamente");
+                response.put("total", 1);
+                response.put("data", puestoEncontrado.get());
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("code", 1);
+                response.put("message", "Puesto no encontrado");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (Exception e) {
+            response.put("code", 2);
+            response.put("message", "Error al unirse a la cola");
             response.put("cause", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }

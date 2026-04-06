@@ -123,3 +123,28 @@
 .empty-state p {
     color: var(--text-secondary);
 }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .mercado-view-container {
+        padding: 2rem 1rem;
+    }
+
+    .mercado-title {
+        font-size: 2rem;
+    }
+
+    .mercado-subtitle {
+        font-size: 1rem;
+    }
+
+    .puestos-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .puesto-card {
+        padding: 2rem 1.25rem;
+    }
+}
+

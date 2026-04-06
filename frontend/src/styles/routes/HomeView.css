@@ -112,3 +112,37 @@
 }
 
 /* Removal of dark mode media query as per new design system direction */
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 2rem 1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .markets-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        gap: 1.5rem;
+    }
+
+    .card-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .profile-card {
+        padding: 2rem 1rem;
+    }
+}
