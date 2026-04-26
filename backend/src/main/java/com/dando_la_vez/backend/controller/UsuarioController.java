@@ -3,9 +3,7 @@ package com.dando_la_vez.backend.controller;
 import com.dando_la_vez.backend.model.Usuario;
 import com.dando_la_vez.backend.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

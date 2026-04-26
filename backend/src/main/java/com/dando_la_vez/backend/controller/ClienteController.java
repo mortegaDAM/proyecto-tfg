@@ -1,15 +1,12 @@
 package com.dando_la_vez.backend.controller;
 
 import com.dando_la_vez.backend.model.Cliente;
-import com.dando_la_vez.backend.model.Usuario;
 import com.dando_la_vez.backend.services.ClienteService;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 @RestController
@@ -38,7 +35,7 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/cliente/{id}")
+    @GetMapping("/cliente/id/{id}")
     public ResponseEntity<?> getClienteId(@PathVariable int id){
         Optional<Cliente> cliente = clienteService.getClienteId(id);
         Map<String, Object> response = new HashMap<>();
@@ -64,21 +61,21 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/cliente/{uid}")
+    @GetMapping("/cliente/uid/{uid}")
     public ResponseEntity<?> getClienteUid(@PathVariable String uid){
         Map<String, Object> response = new HashMap<>();
         try{
             Optional<Cliente> cliente = clienteService.getClienteUid(uid);
             if(cliente.isPresent()){
                 response.put("code",1);
+                response.put("message", "Usuario obtenido correctamente");
+                response.put("total", 1);
+                response.put("data", cliente.get());
+            }else{
+                response.put("code",1);
                 response.put("message", "Usuario no encontrado");
                 response.put("total", 0);
                 response.put("data", null);
-            }else{
-                response.put("code",1);
-                response.put("message", "Usuario obtenido correctamente");
-                response.put("total", 1);
-                response.put("data", cliente);
             }
             return ResponseEntity.ok(response);
 
@@ -103,7 +100,7 @@ public class ClienteController {
                 response.put("code", 1);
                 response.put("message","Cliente anteriormente añadido");
                 response.put("total", 1);
-                response.put("data", null);
+                response.put("data", clientePresente.get());
             }else{
                 Cliente clienteAdd = clienteService.createCliente(cliente);
                 response.put("code", 1);

@@ -6,7 +6,6 @@ import '../styles/routes/MiCuentaView.css';
 import { useEffect, useState } from "react";
 import { ModalView } from "../components/Modal";
 import { useNotification } from "../hooks/NotificationContext";
-import { type Puesto } from "../interfaces/interfaces";
 
 export const MiCuentaView = () => {
     const navigate = useNavigate();

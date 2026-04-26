@@ -73,8 +73,8 @@ export const ComprobarSesion = () => {
 
             if (respuesta.ok) {
                 const datos = await respuesta.json();
-                // guardo en la sesion el uid, nombre, email y cuando caduca la sesion
-                localStorage.setItem('cliente_dando_la_vez', JSON.stringify({ uid: datos.data.uid, nombre: datos.data.nombre, email: datos.data.email, expira }));
+                // guardo en la sesion el id, uid, nombre, email y cuando caduca la sesion
+                localStorage.setItem('cliente_dando_la_vez', JSON.stringify({ id: datos.data.id, uid: datos.data.uid, nombre: datos.data.nombre, email: datos.data.email, expira }));
                 setSession(localStorage.getItem('cliente_dando_la_vez'));
             } else {
                 showNotification("Error", "No se pudo registrar la sesión del cliente.", "error");
